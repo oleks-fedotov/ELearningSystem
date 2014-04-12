@@ -1,0 +1,36 @@
+﻿@model ELearningSystem.Models.AccountModel
+
+<div>
+    <h4>Welcome, @Model.UserName!</h4>
+    Edit profile @Html.ActionLink("Log out", "LogOut", "Account")
+    <ul class="nav nav-pills nav-stacked navbar-left">
+        <li>
+            <a href=@Url.Action("Index", "Course")>
+                <span>
+                    <span class="glyphicon glyphicon-briefcase"></span>
+                    My courses
+                    @*                    @Html.ActionLink("My courses", "Index", "Course")*@
+                </span>
+            </a>
+        </li>
+        <li>
+
+            <a href=@Url.Action("Index", "Course")>
+                <span>
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    Requests for courses
+                    @*                    @Html.ActionLink("Requests for courses", "Index", "Course")*@
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href=@Url.Action("Index", "Course")>
+                <span>
+                    <span class="glyphicon glyphicon-envelope"></span>
+                    Homeworks
+                    @*@Html.ActionLink("Homeworks", "Index", "Course")*@
+                </span>
+            </a>
+        </li>
+    </ul>
+</div>

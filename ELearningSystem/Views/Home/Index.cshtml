@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/slider_content/smslider.css")
+@Scripts.Render("~/Content/slider_content/jquery.smslider.min.js")
+@*<link type="text/css" rel="stylesheet" href="~/Content/slider_content/smslider.css" />
+    <script type="text/javascript" src="~/Content/slider_content/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="~/Content/slider_content/jquery.smslider.min.js"></script>*@
+
+<script>
+    $(document).ready(function () {
+        $('#sm_slider').smSlider(
+        {
+            autoPlay: true,
+            delay: 5000
+        })
+    })
+</script>
+<div id="sm_slider">
+    <ul>
+        <li>
+            <img style="width: 600px; height: auto" src="~/Content/slider_content/images/e-learning1.jpg" /></li>
+        <li>
+            <img style="width: 600px; height: auto" src="~/Content/slider_content/images/iStock_000017973250Small-1.jpg" /></li>
+    </ul>
+    <div class="arrows">
+        <a class="previous" href="#"></a>
+        <a class="next" href="#"></a>
+    </div>
+</div>

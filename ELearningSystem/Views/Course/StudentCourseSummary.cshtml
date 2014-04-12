@@ -1,0 +1,14 @@
+﻿@model Domain.Course
+
+<div class="item">
+    <h3>@Model.Name</h3>
+    <h5>Lecturer: </h5>@Model.Lecturer
+    @using (Html.BeginForm("Subscribe", "Course", FormMethod.Post))
+    {
+        @Html.HiddenFor(p => p.ID)
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+        <input type="submit" value="+ Subscribe" />
+    }
+    <p>@Model.Description</p>    
+    <p>Required skills: </p>@Model.RequiredSkills
+</div>

@@ -1,0 +1,72 @@
+﻿@model Domain.Lecturer
+@{
+    AjaxOptions ajaxOpts = new AjaxOptions()
+    {
+        Url = Url.Action("RegisterLecturer"),
+        UpdateTargetId = "registrationForm",
+        LoadingElementId = "loader",
+        LoadingElementDuration = 1000,
+    };
+}
+
+
+<div id="registrationForm" class="form-horizontal form-group">
+    <div id="loader" style="display: none">Loading...</div>
+    @using (Ajax.BeginForm(ajaxOpts))
+    {
+        <br />
+        @Html.ValidationSummary()
+        <div class="form-group">
+            @Html.Label("Name", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Surname", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Surname, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Login", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Login, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Password", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Password, new { @class = "form-control", type = "password" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Email", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", type = "mail" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-6 control-label col-sm-offset-3">
+                <div class="col-sm-3">
+                    @Html.CheckBoxFor(x => x.IsAcademic, new { @class = "form-control" })
+                </div>
+                @Html.Label("I have a science degree", new { @class = "control-label" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Interests", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextAreaFor(x => x.Interests, new { @class = "form-control", rows = "6" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Information", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextAreaFor(x => x.Information, new { @class = "form-control", rows = "6" })
+            </div>
+        </div>
+        <input type="submit" value="Register" class="btn btn-primary" />
+    }
+</div>

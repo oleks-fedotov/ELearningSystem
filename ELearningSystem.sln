@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearningSystem", "ELearningSystem\ELearningSystem.csproj", "{9504BE70-062A-419E-9DC4-FF6FE73A4556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearningSystem.Tests", "ELearningSystem.Tests\ELearningSystem.Tests.csproj", "{4D114AF0-E7F5-40BA-842E-C6FEC4CC42E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\..\..\university\3 курс\Курсовая\ELearner\Domain\Domain.csproj", "{A6EB53AE-420D-4550-A34D-FA36F2CAABC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9504BE70-062A-419E-9DC4-FF6FE73A4556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9504BE70-062A-419E-9DC4-FF6FE73A4556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9504BE70-062A-419E-9DC4-FF6FE73A4556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9504BE70-062A-419E-9DC4-FF6FE73A4556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D114AF0-E7F5-40BA-842E-C6FEC4CC42E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D114AF0-E7F5-40BA-842E-C6FEC4CC42E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D114AF0-E7F5-40BA-842E-C6FEC4CC42E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D114AF0-E7F5-40BA-842E-C6FEC4CC42E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6EB53AE-420D-4550-A34D-FA36F2CAABC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6EB53AE-420D-4550-A34D-FA36F2CAABC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6EB53AE-420D-4550-A34D-FA36F2CAABC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6EB53AE-420D-4550-A34D-FA36F2CAABC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

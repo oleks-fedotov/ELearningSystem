@@ -1,0 +1,23 @@
+﻿@model IQueryable<Domain.Course>
+
+<div class="col-sm-12 col-sm-offset-1">
+    <h2>My courses</h2>
+    @Html.ActionLink("Add course", "CreateCourse", "Course")
+    @if (Model != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Course</th>
+                    <th>Creation date</th>
+                    <th>End date</th>
+                </tr>
+            </thead>
+            @foreach (var course in Model)
+            {
+                Html.RenderPartial("LecturerCourseSummary", course);
+            }
+        </table>
+    }
+</div>

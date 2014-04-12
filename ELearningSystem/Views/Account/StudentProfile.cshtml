@@ -1,0 +1,12 @@
+﻿@model ELearningSystem.Models.AccountModel
+
+<div>
+    <h4>Welcome, @Model.UserName!</h4>
+    Edit profile @Html.ActionLink("Log out","LogOut","Account")
+    <ul class="nav nav-pills nav-stacked navbar-left">
+        <li>My courses</li>
+        <li>My requests</li>
+        <li>My homeworks</li>
+        <li>My marks</li>
+    </ul>
+</div>

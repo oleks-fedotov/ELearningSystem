@@ -1,0 +1,29 @@
+﻿@model Domain.Course
+
+<tr>
+    <td>
+        <div class="btn">
+            <span class="glyphicon glyphicon glyphicon-pencil"></span>
+        </div>
+        <div class="btn">
+            <span class="glyphicon glyphicon-remove"></span>
+        </div>
+    </td>
+    <td>@Model.Name</td>
+    <td>@Model.CreationDate.ToShortDateString()</td>
+    <td>@( Model.EndDate.HasValue ? Model.EndDate.Value.ToShortDateString() : "--")</td>
+</tr>
+
+@*<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Model.Name</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Edit", "Course", FormMethod.Post))
+        {
+            @Html.HiddenFor(p => p.ID)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+            <input class="pull-right" type="submit" value="Edit" />
+        }
+    </div>
+</div>*@
