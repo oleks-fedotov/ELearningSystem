@@ -1,17 +1,27 @@
 ﻿@model Domain.Course
 
-<tr>
-    <td>
-        <div class="btn">
-            <span class="glyphicon glyphicon glyphicon-pencil"></span>
-        </div>
-        <div class="btn">
-            <span class="glyphicon glyphicon-remove"></span>
-        </div>
-    </td>
-    <td>@Model.Name</td>
-    <td>@Model.CreationDate.ToShortDateString()</td>
-    <td>@( Model.EndDate.HasValue ? Model.EndDate.Value.ToShortDateString() : "--")</td>
+<td>
+    <div>
+        @using (Html.BeginForm("EditCourse", "Course", FormMethod.Post, new { style = "display:inline" }))
+        {
+            @Html.HiddenFor(x => x.ID)
+            <button type="submit" class="btn btn-xs">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+        }
+        @using (Html.BeginForm("RemoveCourse", "Course", FormMethod.Post, new { style = "display:inline" }))
+        {
+            <button type="submit" class="btn btn-xs">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        }
+    </div>
+</td>
+<td>
+    @Model.Name
+</td>
+<td>@Model.CreationDate.ToShortDateString()</td>
+<td>@( Model.EndDate.HasValue ? Model.EndDate.Value.ToShortDateString() : "--")</td>
 </tr>
 
 @*<div class="panel panel-default">

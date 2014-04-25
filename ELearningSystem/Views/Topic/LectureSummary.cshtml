@@ -1,0 +1,27 @@
+﻿@model Domain.Lecture
+
+<tr>
+    <td>
+        <div>
+            @using (Html.BeginForm("EditLecture", "Course", FormMethod.Post, new { style = "display:inline" }))
+        {
+                @Html.HiddenFor(x => x.ID)
+                <button type="submit" class="btn btn-xs">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+        }
+            @using (Html.BeginForm("RemoveLecture", "Course", FormMethod.Post, new { style = "display:inline" }))
+        {
+                <button type="submit" class="btn btn-xs">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+        }
+        </div>
+    </td>
+    <td>
+        @Model.Name
+    </td>
+    <td>
+        @Html.CheckBoxFor(x => (x.Homework != null && x.Homework != string.Empty), new { @readonly = true})
+    </td>
+</tr>

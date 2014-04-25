@@ -1,0 +1,38 @@
+﻿@model ELearningSystem.Models.CourseDetails
+
+
+<div class="col-sm-offset-1">
+    <h2>Course - @Model.CourseName</h2>
+</div>
+<div class="col-sm-offset-2">
+    @using (Html.BeginForm("CreateTopic", "Course", new { courseId = Model.CourseId }, FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            <div class="col-sm-4">
+                @Html.TextBox("topicName", "", new { @class = "form-control", required="true" })
+            </div>
+            <div class="col-sm-3">
+                <input class="btn btn-success form-control" type="submit" value="Add topic" style="vertical-align: text-top" />
+            </div>
+        </div>
+    }
+</div>
+<br />
+@if (Model.Topics.Count() > 0)
+{
+    <div class="col-sm-offset-1">
+        @foreach (var item in Model.Topics)
+        {
+            @Html.Partial("TopicSummary", item)
+        }
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-sm-3 col-sm-offset-3">
+            <h2>No topics</h2>
+        </div>
+    </div>
+}
+

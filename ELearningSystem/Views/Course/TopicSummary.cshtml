@@ -1,0 +1,61 @@
+﻿@model ELearningSystem.Models.Topic
+
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <div class="form-inline">
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        <h4>@Model.TopicName</h4>
+                    </div>
+                </div>
+                @using (Html.BeginForm("CreateLecture", "Lecture", new { topicId = @Model.ID }, FormMethod.Post, new { @class = "form-group" }))
+                {
+                    <input type="submit" value="Add lecture" class="form-control" />
+                }
+                @using (Html.BeginForm("CreateTest", "Test", new { topicId = @Model.ID }, FormMethod.Post, new { @class = "form-group" }))
+                {
+                    <input type="submit" value="Add test" class="form-control" />
+                }
+                @using (Html.BeginForm("Index", "Topic", new { topicId = @Model.ID }, FormMethod.Post, new { @class = "form-group" }))
+                {
+                    <input type="submit" value="Edit" class="form-control" />
+                }
+            </div>
+        </div>
+        <div class="panel-body">
+            @if (Model.Lectures.Count > 0)
+            {
+                <h3>Lectures:</h3>
+                <ul>
+                    @foreach (Domain.Lecture item in @Model.Lectures)
+                    {
+                        <li>
+                            <div>@item.Name</div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="center-block">No lectures</div>
+            }
+            @if (Model.Tests.Count > 0)
+            {
+                <h3>Tests</h3>
+                <ul>
+                    @foreach (var item in @Model.Tests)
+                    {
+                        <li>
+                            <div>@item.Name</div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div>Add test</div>
+            }
+        </div>
+    </div>
+</div>
