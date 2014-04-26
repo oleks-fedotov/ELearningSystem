@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearningSystem", "ELearnin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearningSystem.Tests", "ELearningSystem.Tests\ELearningSystem.Tests.csproj", "{4D114AF0-E7F5-40BA-842E-C6FEC4CC42E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\..\..\university\3 курс\Курсовая\ELearner\Domain\Domain.csproj", "{A6EB53AE-420D-4550-A34D-FA36F2CAABC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{A6EB53AE-420D-4550-A34D-FA36F2CAABC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

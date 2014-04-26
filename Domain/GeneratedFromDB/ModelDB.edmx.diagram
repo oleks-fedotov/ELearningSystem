@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d894dde03ede47c8a494ead899acbe4f" Name="Diagram1">
+        <EntityTypeShape EntityType="ELearnerModel.Answers" Width="1.5" PointX="12" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.CourseCategories" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.CourseRequests" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.Courses" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.CourseTopics" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.CourseTypes" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.GivenAnswers" Width="1.5" PointX="17.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.HomeworkContent" Width="1.5" PointX="10.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.Homeworks" Width="1.5" PointX="8.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.LectureContent" Width="1.5" PointX="9.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.Lecturers" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.Lectures" Width="1.5" PointX="7.5" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.QuestionResults" Width="1.5" PointX="15" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.Questions" Width="1.5" PointX="9.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.StudentCourse" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.Students" Width="1.5" PointX="6" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.TestResults" Width="1.5" PointX="12.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ELearnerModel.Tests" Width="1.5" PointX="7.5" PointY="12.125" IsExpanded="true" />
+        <AssociationConnector Association="ELearnerModel.FK_Answers_Questions" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_Courses_CourseCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_CourseRequests_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_CourseRequests_Students" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_Courses_CourseTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_Courses_Lecturers" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_CourseTopics_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_StudentCourse_Courses" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_Lectures_CourseTopics" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_Tests_CourseTopics" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_GivenAnswers_QuestionResults" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_HomeworkContent_Homeworks" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_Homeworks_Students" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_LectureContent_Lectures" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_QuestionResults_TestResults" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_Questions_Tests" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_StudentCourse_Students" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_TestResults_Students" ManuallyRouted="false" />
+        <AssociationConnector Association="ELearnerModel.FK_TestResults_Tests" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

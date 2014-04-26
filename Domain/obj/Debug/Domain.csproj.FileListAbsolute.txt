@@ -1,0 +1,8 @@
+D:\university\3 курс\Курсовая\ELearner\Domain\bin\Debug\Domain.dll.config
+D:\university\3 курс\Курсовая\ELearner\Domain\bin\Debug\Domain.dll
+D:\university\3 курс\Курсовая\ELearner\Domain\bin\Debug\Domain.pdb
+D:\university\3 курс\Курсовая\ELearner\Domain\bin\Debug\EntityFramework.xml
+D:\university\3 курс\Курсовая\ELearner\Domain\bin\Debug\EntityFramework.SqlServer.xml
+D:\university\3 курс\Курсовая\ELearner\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+D:\university\3 курс\Курсовая\ELearner\Domain\obj\Debug\Domain.dll
+D:\university\3 курс\Курсовая\ELearner\Domain\obj\Debug\Domain.pdb

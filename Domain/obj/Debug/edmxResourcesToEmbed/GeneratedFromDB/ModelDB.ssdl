@@ -1,0 +1,517 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ELearnerModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ELearnerModelStoreContainer">
+    <EntitySet Name="Answers" EntityType="ELearnerModel.Store.Answers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CourseCategories" EntityType="ELearnerModel.Store.CourseCategories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CourseRequests" EntityType="ELearnerModel.Store.CourseRequests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Courses" EntityType="ELearnerModel.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CourseTopics" EntityType="ELearnerModel.Store.CourseTopics" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CourseTypes" EntityType="ELearnerModel.Store.CourseTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GivenAnswers" EntityType="ELearnerModel.Store.GivenAnswers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HomeworkContent" EntityType="ELearnerModel.Store.HomeworkContent" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Homeworks" EntityType="ELearnerModel.Store.Homeworks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LectureContent" EntityType="ELearnerModel.Store.LectureContent" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lecturers" EntityType="ELearnerModel.Store.Lecturers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lectures" EntityType="ELearnerModel.Store.Lectures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="QuestionResults" EntityType="ELearnerModel.Store.QuestionResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Questions" EntityType="ELearnerModel.Store.Questions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StudentCourse" EntityType="ELearnerModel.Store.StudentCourse" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Students" EntityType="ELearnerModel.Store.Students" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="ELearnerModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestResults" EntityType="ELearnerModel.Store.TestResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tests" EntityType="ELearnerModel.Store.Tests" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Answers_Questions" Association="ELearnerModel.Store.FK_Answers_Questions">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="Answers" EntitySet="Answers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseRequests_Courses" Association="ELearnerModel.Store.FK_CourseRequests_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="CourseRequests" EntitySet="CourseRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseRequests_Students" Association="ELearnerModel.Store.FK_CourseRequests_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="CourseRequests" EntitySet="CourseRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Courses_CourseCategories" Association="ELearnerModel.Store.FK_Courses_CourseCategories">
+      <End Role="CourseCategories" EntitySet="CourseCategories" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Courses_CourseTypes" Association="ELearnerModel.Store.FK_Courses_CourseTypes">
+      <End Role="CourseTypes" EntitySet="CourseTypes" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Courses_Lecturers" Association="ELearnerModel.Store.FK_Courses_Lecturers">
+      <End Role="Lecturers" EntitySet="Lecturers" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseTopics_Courses" Association="ELearnerModel.Store.FK_CourseTopics_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="CourseTopics" EntitySet="CourseTopics" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GivenAnswers_QuestionResults" Association="ELearnerModel.Store.FK_GivenAnswers_QuestionResults">
+      <End Role="QuestionResults" EntitySet="QuestionResults" />
+      <End Role="GivenAnswers" EntitySet="GivenAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HomeworkContent_Homeworks" Association="ELearnerModel.Store.FK_HomeworkContent_Homeworks">
+      <End Role="Homeworks" EntitySet="Homeworks" />
+      <End Role="HomeworkContent" EntitySet="HomeworkContent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Homeworks_Students" Association="ELearnerModel.Store.FK_Homeworks_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="Homeworks" EntitySet="Homeworks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LectureContent_Lectures" Association="ELearnerModel.Store.FK_LectureContent_Lectures">
+      <End Role="Lectures" EntitySet="Lectures" />
+      <End Role="LectureContent" EntitySet="LectureContent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lectures_CourseTopics" Association="ELearnerModel.Store.FK_Lectures_CourseTopics">
+      <End Role="CourseTopics" EntitySet="CourseTopics" />
+      <End Role="Lectures" EntitySet="Lectures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QuestionResults_TestResults" Association="ELearnerModel.Store.FK_QuestionResults_TestResults">
+      <End Role="TestResults" EntitySet="TestResults" />
+      <End Role="QuestionResults" EntitySet="QuestionResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Questions_Tests" Association="ELearnerModel.Store.FK_Questions_Tests">
+      <End Role="Tests" EntitySet="Tests" />
+      <End Role="Questions" EntitySet="Questions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentCourse_Courses" Association="ELearnerModel.Store.FK_StudentCourse_Courses">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="StudentCourse" EntitySet="StudentCourse" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentCourse_Students" Association="ELearnerModel.Store.FK_StudentCourse_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="StudentCourse" EntitySet="StudentCourse" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestResults_Students" Association="ELearnerModel.Store.FK_TestResults_Students">
+      <End Role="Students" EntitySet="Students" />
+      <End Role="TestResults" EntitySet="TestResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestResults_Tests" Association="ELearnerModel.Store.FK_TestResults_Tests">
+      <End Role="Tests" EntitySet="Tests" />
+      <End Role="TestResults" EntitySet="TestResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tests_CourseTopics" Association="ELearnerModel.Store.FK_Tests_CourseTopics">
+      <End Role="CourseTopics" EntitySet="CourseTopics" />
+      <End Role="Tests" EntitySet="Tests" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Answers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="QuestionId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AnswerText" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="IsRight" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CourseCategories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CourseRequests">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="CourseId" Type="uniqueidentifier" />
+    <Property Name="Message" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="CategoryId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ComplexityLevel" Type="decimal" Nullable="false" />
+    <Property Name="CourseTypeId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="LecturerId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RequiredSkills" Type="nvarchar" MaxLength="300" />
+    <Property Name="CreationDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CourseTopics">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="OrderNumber" Type="decimal" Nullable="false" />
+    <Property Name="CourseId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CourseTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TypeName" Type="nvarchar" Nullable="false" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="GivenAnswers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="QuestionResultId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AnswerText" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="IsSelected" Type="bit" Nullable="false" />
+    <Property Name="IsRight" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HomeworkContent">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="HomeworkId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" Nullable="false" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Homeworks">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Mark" Type="decimal" />
+    <Property Name="LectureId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LectureContent">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="LectureId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="OrderNumber" Type="decimal" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" Nullable="false" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="Lecturers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Surname" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="IsAcademic" Type="bit" />
+    <Property Name="Interests" Type="nvarchar" MaxLength="500" />
+    <Property Name="Information" Type="nvarchar" MaxLength="500" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="Lectures">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TopicId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Homework" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="QuestionResults">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestResultId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="QuestionText" Type="nvarchar" Nullable="false" MaxLength="350" />
+    <Property Name="QuestionNumber" Type="decimal" />
+  </EntityType>
+  <EntityType Name="Questions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="QuestionNumber" Type="decimal" />
+    <Property Name="QuestionText" Type="nvarchar" Nullable="false" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="StudentCourse">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CourseId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Mark" Type="decimal" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Surname" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="Uni" Type="nvarchar" MaxLength="60" />
+    <Property Name="Interests" Type="nvarchar" MaxLength="500" />
+    <Property Name="Information" Type="nvarchar" MaxLength="500" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TestResults">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TestId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Mark" Type="decimal" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tests">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="TopicId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Duration" Type="decimal" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Answers_Questions">
+    <End Role="Questions" Type="ELearnerModel.Store.Questions" Multiplicity="1" />
+    <End Role="Answers" Type="ELearnerModel.Store.Answers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Answers">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseRequests_Courses">
+    <End Role="Courses" Type="ELearnerModel.Store.Courses" Multiplicity="0..1" />
+    <End Role="CourseRequests" Type="ELearnerModel.Store.CourseRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseRequests">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseRequests_Students">
+    <End Role="Students" Type="ELearnerModel.Store.Students" Multiplicity="1" />
+    <End Role="CourseRequests" Type="ELearnerModel.Store.CourseRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseRequests">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Courses_CourseCategories">
+    <End Role="CourseCategories" Type="ELearnerModel.Store.CourseCategories" Multiplicity="1" />
+    <End Role="Courses" Type="ELearnerModel.Store.Courses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseCategories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Courses_CourseTypes">
+    <End Role="CourseTypes" Type="ELearnerModel.Store.CourseTypes" Multiplicity="1" />
+    <End Role="Courses" Type="ELearnerModel.Store.Courses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="CourseTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Courses_Lecturers">
+    <End Role="Lecturers" Type="ELearnerModel.Store.Lecturers" Multiplicity="1" />
+    <End Role="Courses" Type="ELearnerModel.Store.Courses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lecturers">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="LecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseTopics_Courses">
+    <End Role="Courses" Type="ELearnerModel.Store.Courses" Multiplicity="1" />
+    <End Role="CourseTopics" Type="ELearnerModel.Store.CourseTopics" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseTopics">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GivenAnswers_QuestionResults">
+    <End Role="QuestionResults" Type="ELearnerModel.Store.QuestionResults" Multiplicity="1" />
+    <End Role="GivenAnswers" Type="ELearnerModel.Store.GivenAnswers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionResults">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GivenAnswers">
+        <PropertyRef Name="QuestionResultId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HomeworkContent_Homeworks">
+    <End Role="Homeworks" Type="ELearnerModel.Store.Homeworks" Multiplicity="1" />
+    <End Role="HomeworkContent" Type="ELearnerModel.Store.HomeworkContent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Homeworks">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HomeworkContent">
+        <PropertyRef Name="HomeworkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Homeworks_Students">
+    <End Role="Students" Type="ELearnerModel.Store.Students" Multiplicity="1" />
+    <End Role="Homeworks" Type="ELearnerModel.Store.Homeworks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Homeworks">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LectureContent_Lectures">
+    <End Role="Lectures" Type="ELearnerModel.Store.Lectures" Multiplicity="1" />
+    <End Role="LectureContent" Type="ELearnerModel.Store.LectureContent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lectures">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LectureContent">
+        <PropertyRef Name="LectureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lectures_CourseTopics">
+    <End Role="CourseTopics" Type="ELearnerModel.Store.CourseTopics" Multiplicity="1" />
+    <End Role="Lectures" Type="ELearnerModel.Store.Lectures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseTopics">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Lectures">
+        <PropertyRef Name="TopicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QuestionResults_TestResults">
+    <End Role="TestResults" Type="ELearnerModel.Store.TestResults" Multiplicity="1" />
+    <End Role="QuestionResults" Type="ELearnerModel.Store.QuestionResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestResults">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QuestionResults">
+        <PropertyRef Name="TestResultId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Questions_Tests">
+    <End Role="Tests" Type="ELearnerModel.Store.Tests" Multiplicity="1" />
+    <End Role="Questions" Type="ELearnerModel.Store.Questions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tests">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Questions">
+        <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentCourse_Courses">
+    <End Role="Courses" Type="ELearnerModel.Store.Courses" Multiplicity="1" />
+    <End Role="StudentCourse" Type="ELearnerModel.Store.StudentCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentCourse">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentCourse_Students">
+    <End Role="Students" Type="ELearnerModel.Store.Students" Multiplicity="1" />
+    <End Role="StudentCourse" Type="ELearnerModel.Store.StudentCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StudentCourse">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestResults_Students">
+    <End Role="Students" Type="ELearnerModel.Store.Students" Multiplicity="1" />
+    <End Role="TestResults" Type="ELearnerModel.Store.TestResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Students">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TestResults">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestResults_Tests">
+    <End Role="Tests" Type="ELearnerModel.Store.Tests" Multiplicity="1" />
+    <End Role="TestResults" Type="ELearnerModel.Store.TestResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tests">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TestResults">
+        <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tests_CourseTopics">
+    <End Role="CourseTopics" Type="ELearnerModel.Store.CourseTopics" Multiplicity="1" />
+    <End Role="Tests" Type="ELearnerModel.Store.Tests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseTopics">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Tests">
+        <PropertyRef Name="TopicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
