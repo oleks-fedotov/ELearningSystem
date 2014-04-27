@@ -308,7 +308,7 @@
     <Content Include="Views\Course\EditCourse.cshtml" />
     <Content Include="Views\Course\TopicSummary.cshtml" />
     <Content Include="Views\Course\CreateTopic.cshtml" />
-    <Content Include="Views\Topic\Index.cshtml" />
+    <Content Include="Views\Topic\EditTopic.cshtml" />
     <Content Include="Views\Topic\LectureSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -342,7 +342,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1381</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:44300/</IISUrl>
+          <IISUrl>http://localhost:8292/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

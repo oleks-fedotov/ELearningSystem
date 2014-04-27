@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Providers.Entities;
 using System.Web.Security;
 
 namespace ELearningSystem.Controllers
@@ -24,16 +25,20 @@ namespace ELearningSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Guid topicId)
+        public ActionResult EditTopic(UserInformation user, Guid topicId)
         {
-            CourseTopic t = _repository.CourseTopics.Where(x => x.ID == topicId).First();
-            Topic topic = new Topic() { CourseId = t.CourseId, ID = t.ID, TopicName = t.Name };
-            topic.CourseName = _repository.Courses.Where(x => x.ID == topic.CourseId).Select(x => x.Name).First();
-            List<Lecture> lectures = _repository.Lectures.Where(x => x.TopicId == topicId).ToList<Lecture>();
-            List<Test> tests = _repository.Tests.Where(x => x.TopicId == topicId).ToList<Test>();
-            topic.Lectures = lectures;
-            topic.Tests = tests;
-            return View(topic);
+            if (user != null)
+            {
+                CourseTopic t = _repository.CourseTopics.Where(x => x.ID == topicId).First();
+                Topic topic = new Topic() { CourseId = t.CourseId, ID = t.ID, TopicName = t.Name };
+                topic.CourseName = _repository.Courses.Where(x => x.ID == topic.CourseId).Select(x => x.Name).First();
+                List<Lecture> lectures = _repository.Lectures.Where(x => x.TopicId == topicId).ToList<Lecture>();
+                List<Test> tests = _repository.Tests.Where(x => x.TopicId == topicId).ToList<Test>();
+                topic.Lectures = lectures;
+                topic.Tests = tests;
+                return View(topic);
+            }
+            else return View("UnauthorizedAccess");
         }
 
     }

@@ -17,9 +17,10 @@
                 {
                     <input type="submit" value="Add test" class="form-control" />
                 }
-                @using (Html.BeginForm("Index", "Topic", new { topicId = @Model.ID }, FormMethod.Post, new { @class = "form-group" }))
+                @using (Html.BeginForm("EditTopic", "Topic", FormMethod.Post, new { @class = "form-group" }))
                 {
                     <input type="submit" value="Edit" class="form-control" />
+                    @Html.Hidden("topicId",Model.ID)
                 }
             </div>
         </div>
