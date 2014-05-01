@@ -1,8 +1,17 @@
 ﻿@model ELearningSystem.Models.AccountModel
+@{
+    if (TempData["access"] != null && !(bool)TempData["access"])
+    {
+        <script>
+            window.location.reload();
+        </script>
+        @TempData.Remove("access");
+    }
+}
 
 <div>
     <h4>Welcome, @Model.UserName!</h4>
-    Edit profile @Html.ActionLink("Log out","LogOut","Account")
+    Edit profile @Html.ActionLink("Log out", "LogOut", "Account")
     <ul class="nav nav-pills nav-stacked navbar-left">
         <li>My courses</li>
         <li>My requests</li>

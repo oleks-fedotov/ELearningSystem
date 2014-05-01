@@ -1,4 +1,4 @@
-﻿@model ELearningSystem.Models.Topic
+﻿@model ELearningSystem.Models.TopicForEditing
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +7,7 @@
 <div>
     <div class="form-inline">
         <div class="form-group">
-            @using (Html.BeginForm("EditCourse", "Course", new { courseId = Model.CourseId }, FormMethod.Post, null))
+            @using (Html.BeginForm("EditCourse", "Course", new { courseId = Model.CourseId }, FormMethod.Get, null))
             {
                 <div>
                     <button type="submit" class="btn">
@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-12 col-sm-offset-1">
-                <h2>@Model.CourseName - @Model.TopicName</h2>
+                <h2>@ViewBag.CourseName - @ViewBag.TopicName</h2>
             </div>
         </div>
     </div>

@@ -1,6 +1,50 @@
-﻿@model ELearningSystem.Models.Topic
+﻿@*@model List<ELearningSystem.Models.Topic>*@
+@model ELearningSystem.Models.CourseDetails
 
-<div class="col-sm-12 col-sm-offset-1">
+@for (int i = 0; i < Model.Topics.Count; i++)
+{
+    <tr>
+        <td>
+            <div class="col-sm-12">
+                <div class="form-inline">
+                    <div class="form-group">
+
+                        <button onclick="MoveUp(this); return false;" class="btn btn-xs btn-default">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                        </button>
+                        <button onclick="MoveDown(this); return false;" class="btn btn-xs btn-default">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </button>
+                        <a class="btn btn-xs btn-default" href=@Url.Action("EditTopic", "Topic", new { topicId = Model.Topics[i].ID }) >
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        @Html.Hidden("topicId", Model.Topics[i].ID)
+
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(x => x.Topics[i].CourseId)
+            @Html.HiddenFor(x => x.Topics[i].ID)
+            @Html.HiddenFor(x => x.Topics[i].OrderNumber)
+        </td>
+        <td>
+            @Html.HiddenFor(x => x.Topics[i].TopicName)
+            @Html.DisplayFor(x => x.Topics[i].TopicName)
+        </td>
+        <td>
+            @Html.HiddenFor(x => x.Topics[i].LecturesCount)
+            @Html.DisplayFor(x => x.Topics[i].LecturesCount)
+        </td>
+        <td>
+            @Html.HiddenFor(x => x.Topics[i].TestsCount)
+            @Html.DisplayFor(x => x.Topics[i].TestsCount)
+        </td>
+    </tr>
+}
+
+
+
+@*<div class="col-sm-12 col-sm-offset-1">
     <div class="panel panel-default ">
         <div class="panel-heading">
             <div class="form-inline">
@@ -59,4 +103,4 @@
             }
         </div>
     </div>
-</div>
+</div>*@

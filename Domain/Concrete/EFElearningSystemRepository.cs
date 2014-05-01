@@ -109,7 +109,7 @@ namespace Domain.Concrete
 
         public void SaveTopic(CourseTopic topic)
         {
-            if (topic.ID.ToString() == "00000000-0000-0000-0000-000000000000")
+            if (topic.ID == Guid.Empty)
             {
                 _context.CourseTopics.Add(topic);
             }

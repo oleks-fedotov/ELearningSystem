@@ -9,30 +9,47 @@
     {
         <div class="form-group">
             <div class="col-sm-4">
-                @Html.TextBox("topicName", "", new { @class = "form-control", required="true" })
+                @Html.TextBox("newTopicName", "", new { @class = "form-control", required = "true" })
             </div>
             <div class="col-sm-3">
-                <input class="btn btn-success form-control" type="submit" value="Add topic" style="vertical-align: text-top" />
+                <input class="btn btn-success form-control" onclick="AddTopic(); return false;" type="submit" value="Add topic" style="vertical-align: text-top" />
+            </div>
+            <div class="col-sm-3">
+                <input class="btn  btn-success form-control" onclick="$('#SaveCourseForm').submit(); return false;" value="Save changes" id="SaveChangesBut" style="display: none; vertical-align: text-top;" />
             </div>
         </div>
     }
 </div>
 <br />
-@if (Model.Topics.Count() > 0)
-{
+@*@if (Model.Topics.Count() > 0)*@
+@{
+    using (Html.BeginForm("EditCourse", "Course", FormMethod.Post, new { id = "SaveCourseForm" }))
+    {
+    @Html.HiddenFor(x => x.CourseId)
+    @Html.HiddenFor(x => x.CourseName)
     <div class="col-sm-offset-1">
-        @foreach (var item in Model.Topics)
-        {
-            @Html.Partial("TopicSummary", item)
-        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Actions</th>
+                    <th>Topic name</th>
+                    <th>Lectures quantity</th>
+                    <th>Tests quantity</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @Html.Partial("TopicSummary", Model)
+            </tbody>
+        </table>
     </div>
+    }
 }
-else
+@*else
 {
     <div class="row">
         <div class="col-sm-3 col-sm-offset-3">
             <h2>No topics</h2>
         </div>
     </div>
-}
+}*@
 

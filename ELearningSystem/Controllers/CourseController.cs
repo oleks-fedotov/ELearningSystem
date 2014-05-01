@@ -75,7 +75,7 @@ namespace ELearningSystem.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult EditCourse(Guid ID)
         {
             CourseDetails details = new CourseDetails();
@@ -84,12 +84,12 @@ namespace ELearningSystem.Controllers
             {
                 details.CourseId = course.First().ID;
                 details.CourseName = course.First().Name;
-                details.Topics = (from x in _repository.CourseTopics where x.CourseId == details.CourseId select new Topic { TopicName = x.Name, ID = x.ID, CourseId = x.CourseId }).ToList<Topic>();
+                details.Topics = (from x in _repository.CourseTopics where x.CourseId == details.CourseId select new Topic { TopicName = x.Name, ID = x.ID, CourseId = x.CourseId, OrderNumber = x.OrderNumber }).OrderBy(x => x.OrderNumber).ToList<Topic>();
                 for (int i = 0; i < details.Topics.Count; i++)
                 {
                     Guid topicId = details.Topics[i].ID;
-                    details.Topics[i].Lectures = _repository.Lectures.Where(x => x.TopicId == topicId).ToList();
-                    details.Topics[i].Tests = _repository.Tests.Where(x => x.TopicId == topicId).ToList();
+                    details.Topics[i].LecturesCount = _repository.Lectures.Where(x => x.TopicId == topicId).Count();
+                    details.Topics[i].TestsCount = _repository.Tests.Where(x => x.TopicId == topicId).Count();
                 }
                 //details.Topics = _repository.CourseTopics.Where(x => x.CourseId == details.CourseId);
             }
@@ -97,6 +97,17 @@ namespace ELearningSystem.Controllers
             return View(details);
         }
 
+        [HttpPost]
+        public ActionResult EditCourse(CourseDetails details)
+        {
+            foreach (var item in details.Topics)
+            {
+                _repository.SaveTopic(new CourseTopic() { ID = item.ID, CourseId = item.CourseId, Name = item.TopicName, OrderNumber = item.OrderNumber });
+            }
+            return RedirectToAction("EditCourse", new { ID = details.CourseId });
+        }
+
+        //isn't used
         [HttpPost]
         public RedirectToRouteResult CreateTopic(Guid courseId, string topicName)
         {

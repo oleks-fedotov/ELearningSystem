@@ -2,7 +2,7 @@
 
 <td>
     <div>
-        @using (Html.BeginForm("EditCourse", "Course", FormMethod.Post, new { style = "display:inline" }))
+        @using (Html.BeginForm("EditCourse", "Course", FormMethod.Get, new { style = "display:inline" }))
         {
             @Html.HiddenFor(x => x.ID)
             <button type="submit" class="btn btn-xs">
