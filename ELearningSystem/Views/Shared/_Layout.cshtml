@@ -11,7 +11,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/myscripts")
-
+    @RenderSection("scripts", required: false)
 </head>
 <body>
 
@@ -20,16 +20,16 @@
             <h2>
                 @Html.ActionLink("Online courses", "Index", "Home", null, new { style = "text-decoration: none; color:black; margin-left:40px" })
             </h2>
-            
+
         </div>
         <div id="content" class="container row">
             <div class="col-md-2 col-md-offset-1 pull-left">
-                    <div class="row">
-                        @Html.Partial("Menu")
-                    </div>
-                    <div class="row">
-                        @Html.Action("Login", "Account")
-                    </div>
+                <div class="row">
+                    @Html.Partial("Menu")
+                </div>
+                <div class="row">
+                    @Html.Action("Login", "Account")
+                </div>
             </div>
             <div class="col-sm-8 col-sm-offset-3 center-block">
                 @RenderBody()
@@ -41,6 +41,6 @@
 
 
 
-    @RenderSection("scripts", required: false)
+
 </body>
 </html>

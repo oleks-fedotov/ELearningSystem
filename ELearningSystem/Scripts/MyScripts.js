@@ -2,9 +2,9 @@
     button.css("disabled", "true");
 }
 
-function MoveUp(elem) {
+function MoveUp(container, elem) {
     var thisrow = $(elem).closest("tr");
-    if (thisrow[0] != $("#tableBody").children().first()[0]) {
+    if (thisrow[0] != container.children().first()[0]) {
         if ($("#SaveChangesBut").css("display") == "none") { $("#SaveChangesBut").css("display", "inline"); }
         var prevrow = thisrow.prev();
         var thisOrderNumber = thisrow.children().first().children().last();
@@ -15,9 +15,9 @@ function MoveUp(elem) {
     }
 };
 
-function MoveDown(elem) {
+function MoveDown(container, elem) {
     var thisrow = $(elem).closest("tr");
-    if (thisrow[0] != $("#tableBody").children().last()[0]) {
+    if (thisrow[0] != container.children().last()[0]) {
         if ($("#SaveChangesBut").css("display") == "none") { $("#SaveChangesBut").css("display", "inline"); }
         var nextrow = thisrow.next();
         var thisOrderNumber = thisrow.children().first().children().last();
@@ -28,17 +28,16 @@ function MoveDown(elem) {
     }
 };
 
-function AddTopic() {
+function AddTopic(container) {
     if ($("#SaveChangesBut").css("display") == "none") { $("#SaveChangesBut").css("display", "inline"); }
     var topicName = $("#newTopicName").val();
     var courseId = $("#CourseId").val();
-    if (isNaN(Number($("#tableBody").children().last().children().first().children().last().val())))
+    if (isNaN(Number(container.children().last().children().first().children().last().val())))
         var topicNumber = 1;
     else
-        var topicNumber = Number($("#tableBody").children().last().children().first().children().last().val()) + 1;
-    var target = $("#tableBody");
+        var topicNumber = Number(container.children().last().children().first().children().last().val()) + 1;
     var index = topicNumber - 1;
-    target.append(
+    container.append(
     '<tr><td><div class="col-sm-12"><div class="form-inline"><div class="form-group">' +
         '<button onclick="MoveUp(this); return false;" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button> ' +
         '<button onclick="MoveDown(this); return false;" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button> ' +

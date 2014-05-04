@@ -1,9 +1,25 @@
 ﻿@model ELearningSystem.Models.LectureForEditing
 
+@section scripts{
+<script src="~/Scripts/tinymce/tinymce.min.js"></script>
+}
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "advlist autolink lists link image charmap print preview",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    });
+</script>
+
 <div class="col-sm-12 col-sm-offset-1">
     <h3>Lecture details.</h3>
     @using (Html.BeginForm("SaveLecture", "Lecture", FormMethod.Post, new { @class = "form-horizontal" }))
     {
+        @Html.ValidationSummary()
         @Html.HiddenFor(x => x.ID)
         @Html.HiddenFor(x => x.TopicId)
         <div class="form-group">

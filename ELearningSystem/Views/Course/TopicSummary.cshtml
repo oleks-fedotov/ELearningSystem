@@ -9,10 +9,10 @@
                 <div class="form-inline">
                     <div class="form-group">
 
-                        <button onclick="MoveUp(this); return false;" class="btn btn-xs btn-default">
+                        <button onclick="MoveUp($(this).closest('tbody'), this); return false;" class="btn btn-xs btn-default">
                             <span class="glyphicon glyphicon-arrow-up"></span>
                         </button>
-                        <button onclick="MoveDown(this); return false;" class="btn btn-xs btn-default">
+                        <button onclick="MoveDown($(this).closest('tbody'), this); return false;" class="btn btn-xs btn-default">
                             <span class="glyphicon glyphicon-arrow-down"></span>
                         </button>
                         <a class="btn btn-xs btn-default" href=@Url.Action("EditTopic", "Topic", new { topicId = Model.Topics[i].ID }) >

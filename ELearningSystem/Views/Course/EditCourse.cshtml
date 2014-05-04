@@ -28,7 +28,7 @@
                     @Html.TextBox("newTopicName", "", new { @class = "form-control", required = "true" })
                 </div>
                 <div class="col-sm-3">
-                    <input class="btn btn-success form-control" onclick="AddTopic(); return false;" type="submit" value="+ Add topic" style="vertical-align: text-top" />
+                    <input class="btn btn-success form-control" onclick="AddTopic($('#tableBody')); return false;" type="submit" value="+ Add topic" style="vertical-align: text-top" />
                 </div>
                 <div class="col-sm-3">
                     <input class="btn  btn-success form-control" onclick="$('#SaveCourseForm').submit(); return false;" value="Save changes" id="SaveChangesBut" style="display: none; vertical-align: text-top;" />
