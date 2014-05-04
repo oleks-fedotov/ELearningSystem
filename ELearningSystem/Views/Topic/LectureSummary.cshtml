@@ -1,27 +1,47 @@
-﻿@model Domain.Lecture
+﻿@model ELearningSystem.Models.TopicForEditing
 
-<tr>
-    <td>
-        <div>
-            @using (Html.BeginForm("EditLecture", "Course", FormMethod.Post, new { style = "display:inline" }))
-        {
-                @Html.HiddenFor(x => x.ID)
-                <button type="submit" class="btn btn-xs">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-        }
-            @using (Html.BeginForm("RemoveLecture", "Course", FormMethod.Post, new { style = "display:inline" }))
-        {
-                <button type="submit" class="btn btn-xs">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-        }
-        </div>
-    </td>
-    <td>
-        @Model.Name
-    </td>
-    <td>
-        @Html.CheckBoxFor(x => (x.Homework != null && x.Homework != string.Empty), new { @readonly = true})
-    </td>
-</tr>
+@for (int i = 0; i < Model.Lectures.Count; i++)
+{
+    <tr>
+        <td>
+            <div class="col-sm-12">
+                <div class="form-inline">
+                    <div class="form-group">
+
+                        <button onclick="MoveUp(this); return false;" class="btn btn-xs btn-default">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                        </button>
+                        <button onclick="MoveDown(this); return false;" class="btn btn-xs btn-default">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </button>
+                        <a class="btn btn-xs btn-default" href=@Url.Action("EditLecture", "Lecture", new { lectureId = Model.Lectures[i].ID }) >
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        @Html.Hidden("topicId", Model.ID)
+
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(x => x.Lectures[i].TopicId)
+            @Html.HiddenFor(x => x.Lectures[i].ID)
+            @Html.HiddenFor(x => x.Lectures[i].OrderNumber)
+
+            @*<div>
+                @using (Html.BeginForm("EditLecture", "Course", FormMethod.Get, new { style = "display:inline" }))
+                {
+                    @Html.HiddenFor(x => x.ID)
+                    <button type="submit" class="btn btn-xs">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                }
+            </div>*@
+        </td>
+        <td>
+            @Model.Lectures[i].Name
+        </td>
+        <td>
+            @Html.CheckBox("conteinsHomework", (Model.Lectures[i] != null && Model.Lectures[i].Homework != null && Model.Lectures[i].Homework != string.Empty), new { disabled = true })
+            @*@Html.CheckBoxFor(x => (x.Lectures[i] != null && x.Lectures[i].Homework != string.Empty), new { @readonly = true })*@
+        </td>
+    </tr>
+}

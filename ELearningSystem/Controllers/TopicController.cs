@@ -40,17 +40,17 @@ namespace ELearningSystem.Controllers
                         TopicForEditing t = new TopicForEditing();
                         t.ID = topicId;
                         t.CourseId = _repository.CourseTopics.Where(x => x.ID == topicId).First().CourseId;
-                        ViewBag.CourseName = _repository.Courses.Where(x => x.ID == t.CourseId);
+                        ViewBag.CourseName = _repository.Courses.Where(x => x.ID == t.CourseId).First<Course>().Name;
                         ViewBag.TopicName = _repository.CourseTopics.Where(x => x.ID == topicId).First().Name;
-                        t.Lectures = _repository.Lectures.Where(x => x.TopicId == topicId).ToList<Lecture>();
+                        t.Lectures = _repository.Lectures.Where(x => x.TopicId == topicId).OrderBy(x => x.OrderNumber).ToList<Lecture>();
                         t.Tests = _repository.Tests.Where(x => x.TopicId == topicId).ToList<Test>();
                         return View(t);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         return View("Error");
                     }
-                    
+
                 }
             }
             else return View("UnauthorizedAccess");

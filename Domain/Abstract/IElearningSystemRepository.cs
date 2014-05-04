@@ -36,6 +36,8 @@ namespace Domain.Abstract
 
         IQueryable<Lecture> Lectures { get; }
 
+        void SaveLecture(Lecture lecture);
+
         IQueryable<LectureContent> LectureContents { get; }
 
         IQueryable<Lecturer> Lecturers { get; }

@@ -1,0 +1,23 @@
+﻿@model ELearningSystem.Models.LectureForEditing
+
+<div class="col-sm-12 col-sm-offset-1">
+    <h3>Lecture details.</h3>
+    @using (Html.BeginForm("SaveLecture", "Lecture", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.HiddenFor(x => x.ID)
+        @Html.HiddenFor(x => x.TopicId)
+        <div class="form-group">
+            @Html.Label("Lecture name")
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Lecture content")
+            @Html.TextAreaFor(x => x.LectureContent, new { @class = "form-control", rows = "15" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Homework")
+            @Html.TextAreaFor(x => x.Homework, new { @class = "form-control", rows = "10" })
+        </div>
+        <input type="submit" class="btn btn-success btn-block" value="Save lecture" />
+    }
+</div>

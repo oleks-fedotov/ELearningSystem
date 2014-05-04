@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
 
-namespace Domain
+namespace ELearningSystem.Models
 {
-    public class Lecture
+    public class LectureForEditing
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [HiddenInput(DisplayValue = false)]
         public Guid ID { get; set; }
 
         public Guid TopicId { get; set; }
-
-        public virtual CourseTopic Topic { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -29,5 +21,7 @@ namespace Domain
         public string LectureContent { get; set; }
 
         public decimal OrderNumber { get; set; }
+
+        public List<string> Files { get; set; }
     }
 }

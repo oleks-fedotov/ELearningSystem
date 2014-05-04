@@ -165,6 +165,24 @@ namespace Domain.Concrete
             }
         }
 
+        public void SaveLecture(Lecture lecture)
+        {
+            if (lecture.ID == Guid.Empty)
+                _context.Lectures.Add(lecture);
+            else
+            {
+                Lecture dbEntry = _context.Lectures.Find(lecture.ID);
+                if (dbEntry != null)
+                {
+                    dbEntry.Homework = lecture.Homework;
+                    dbEntry.LectureContent = lecture.LectureContent;
+                    dbEntry.Name = lecture.Name;
+                    dbEntry.OrderNumber = lecture.OrderNumber;
+                }
+            }
+            _context.SaveChanges();
+        }
+
         public IQueryable<LectureContent> LectureContents
         {
             get
@@ -240,5 +258,6 @@ namespace Domain.Concrete
                 return _context.TestResults;
             }
         }
+       
     }
 }
