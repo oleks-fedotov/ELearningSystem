@@ -170,6 +170,37 @@ namespace ELearningSystem.Controllers
             else return View("UnauthorizedAccess");
         }
 
+        [HttpPost]
+        public ActionResult DeleteCourse(UserInformation user, Guid courseId)
+        {
+            if (user != null)
+            {
+                if (user.IsStudent)
+                {
+                    return View("Students limitations");
+                }
+                else
+                {
+                    try
+                    {
+                        if (!CheckIfLecturerCanAccessTheCourse(user, courseId))
+                            return View("AccessDenied");
+                        else
+                        {
+                            _repository.DeleteCourse(courseId);
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return View("Error");
+                    }
+
+                }
+            }
+            else return View("UnauthorizedAccess");
+        }
+
         private bool CheckIfLecturerCanAccessTheCourse(UserInformation user, Guid courseId)
         {
             return user.UserId == _repository.Courses.Where(x => x.ID == courseId).First().LecturerId;

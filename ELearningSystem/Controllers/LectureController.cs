@@ -141,6 +141,46 @@ namespace ELearningSystem.Controllers
             else return View("UnauthorizedAccess");
         }
 
+        [HttpPost]
+        public ActionResult DeleteLecture(UserInformation user, Guid lectureId)
+        {
+            if (user != null)
+            {
+                if (user.IsStudent)
+                {
+                    return View("Students limitations");
+                }
+                else
+                {
+                    try
+                    {
+                        if (!CheckIfLecturerHasAccess(user, lectureId))
+                            return View("AccessDenied");
+                        else
+                        {
+                            //Change order
+                            Lecture lecture = _repository.Lectures.Where(x => x.ID == lectureId).First();
+                            List<Lecture> lectures = _repository.Lectures.Where(x => x.TopicId == lecture.TopicId && x.OrderNumber > lecture.OrderNumber).ToList();
+                            lectures.ForEach(x => x.OrderNumber--);
+                            //delete and save
+                            _repository.DeleteLecture(lectureId);
+                            foreach (var item in lectures)
+                            {
+                                _repository.SaveLecture(item);
+                            }
+                            return RedirectToAction("EditTopic", "Topic", new { topicId = lecture.TopicId });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return View("Error");
+                    }
+
+                }
+            }
+            else return View("UnauthorizedAccess");
+        }
+
         private bool CheckIfLecturerHasAccess(UserInformation user, Guid lectureId)
         {
             return user.UserId == _repository.Courses.Where(x => x.ID == _repository.CourseTopics.Where(y => y.ID == _repository.Lectures.Where(z => z.ID == lectureId).FirstOrDefault().TopicId).FirstOrDefault().CourseId).First().LecturerId;

@@ -68,6 +68,46 @@ namespace ELearningSystem.Controllers
             return RedirectToAction("EditTopic", new { topicId = topic.ID });
         }
 
+        [HttpPost]
+        public ActionResult DeleteTopic(UserInformation user, Guid topicId)
+        {
+            if (user != null)
+            {
+                if (user.IsStudent)
+                {
+                    return View("Students limitations");
+                }
+                else
+                {
+                    try
+                    {
+                        if (!CheckIfLecturerHasAccessToTheTopic(user, topicId))
+                            return View("AccessDenied");
+                        else
+                        {
+                            //Change order
+                            CourseTopic topic = _repository.CourseTopics.Where(x => x.ID == topicId).First();
+                            List<CourseTopic> topics = _repository.CourseTopics.Where(x => x.CourseId == topic.CourseId && x.OrderNumber > topic.OrderNumber).ToList();
+                            topics.ForEach(x => x.OrderNumber--);
+                            //delete and save
+                            _repository.DeleteTopic(topicId);
+                            foreach (var item in topics)
+                            {
+                                _repository.SaveTopic(item);
+                            }
+                            return RedirectToAction("EditCourse","Course", new { ID = topic.CourseId });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return View("Error");
+                    }
+
+                }
+            }
+            else return View("UnauthorizedAccess");
+        }
+
         private void SaveReorderedLectures(List<Lecture> lectures)
         {
             foreach (var item in lectures)

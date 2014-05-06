@@ -2,7 +2,7 @@
 
 <div class="col-sm-12 col-sm-offset-1">
     <h2>My courses</h2>
-    @Html.ActionLink("Add course", "CreateCourse", "Course")
+    @Html.ActionLink(" + Add course", "CreateCourse", "Course", new { @class="btn btn-success"})
     @if (Model != null)
     {
         <table class="table table-striped">

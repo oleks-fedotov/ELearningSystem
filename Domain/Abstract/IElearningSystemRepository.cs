@@ -18,6 +18,8 @@ namespace Domain.Abstract
 
         void SaveCourse(Course course);
 
+        void DeleteCourse(Guid courseId);
+
         IQueryable<CourseCategory> CourseCategories { get; }
 
         IQueryable<CourseRequest> CourseRequests { get; }
@@ -25,6 +27,8 @@ namespace Domain.Abstract
         IQueryable<CourseTopic> CourseTopics { get; }
 
         void SaveTopic(CourseTopic topic);
+
+        void DeleteTopic(Guid topicId);
 
         IQueryable<CourseType> CourseTypes { get; }
 
@@ -37,6 +41,8 @@ namespace Domain.Abstract
         IQueryable<Lecture> Lectures { get; }
 
         void SaveLecture(Lecture lecture);
+
+        void DeleteLecture(Guid lectureId);
 
         IQueryable<LectureContent> LectureContents { get; }
 

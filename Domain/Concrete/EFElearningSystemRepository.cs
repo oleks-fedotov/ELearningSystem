@@ -83,6 +83,16 @@ namespace Domain.Concrete
             _context.SaveChanges();
         }
 
+        public void DeleteCourse(Guid courseId)
+        {
+            Course courseForRemoving = _context.Courses.Find(courseId);
+            if (courseForRemoving != null)
+            {
+                _context.Courses.Remove(courseForRemoving);
+                _context.SaveChanges();
+            }
+        }
+
         public IQueryable<CourseCategory> CourseCategories
         {
             get
@@ -123,6 +133,16 @@ namespace Domain.Concrete
                 }
             }
             _context.SaveChanges();
+        }
+
+        public void DeleteTopic(Guid topicId)
+        {
+            CourseTopic topicForRemoving = _context.CourseTopics.Find(topicId);
+            if (topicForRemoving != null)
+            {
+                _context.CourseTopics.Remove(topicForRemoving);
+                _context.SaveChanges();
+            }
         }
 
         public IQueryable<CourseType> CourseTypes
@@ -181,6 +201,16 @@ namespace Domain.Concrete
                 }
             }
             _context.SaveChanges();
+        }
+
+        public void DeleteLecture(Guid lectureId)
+        {
+            Lecture lectureForRemoving = _context.Lectures.Find(lectureId);
+            if (lectureForRemoving != null)
+            {
+                _context.Lectures.Remove(lectureForRemoving);
+                _context.SaveChanges();
+            }
         }
 
         public IQueryable<LectureContent> LectureContents
@@ -258,6 +288,6 @@ namespace Domain.Concrete
                 return _context.TestResults;
             }
         }
-       
+
     }
 }

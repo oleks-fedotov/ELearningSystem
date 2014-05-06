@@ -39,12 +39,18 @@ function AddTopic(container) {
     var index = topicNumber - 1;
     container.append(
     '<tr><td><div class="col-sm-12"><div class="form-inline"><div class="form-group">' +
-        '<button onclick="MoveUp(this); return false;" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button> ' +
-        '<button onclick="MoveDown(this); return false;" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button> ' +
+        '<button onclick="MoveUp($(this).closest(\'tbody\'), this); return false;" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button> ' +
+        '<button onclick="MoveDown($(this).closest(\'tbody\'), this); return false;" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button> ' +
         '<input id="topicId" name="topicId" type="hidden" value="00000000-0000-0000-0000-000000000000"></form>' +
         '</div></div></div><input name="Topics[' + index + '].ID" type="hidden" value="00000000-0000-0000-0000-000000000000">' +
         '<input name="Topics[' + index + '].CourseId" type="hidden" value="' + courseId + '">' +
             '<input data-val="true" data-val-number="The field OrderNumber must be a number." data-val-required="The OrderNumber field is required." name="Topics[' + index +
             '].OrderNumber" type="hidden" value="' + topicNumber + '">' +
         '</td><td><input name="Topics[' + index + '].TopicName" type="hidden" value="' + topicName + '">' + topicName + '</td><td>0</td><td>0</td></tr>')
+};
+
+function DeleteCourseConfirmation(courseName) {
+    var flag = window.confirm("Are you sure, you want to delete course - " + courseName + "?");
+    if (flag) return true;
+    else return false;
 };
