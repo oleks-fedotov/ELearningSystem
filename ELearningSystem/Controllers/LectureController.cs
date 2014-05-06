@@ -42,7 +42,12 @@ namespace ELearningSystem.Controllers
                 {
                     try
                     {
-                        return View("EditLecture", new LectureForEditing() { TopicId = topicId });
+                        if (!CheckIfLecturerHasAccessToTheTopic(user, topicId))
+                            return View("AccessDenied");
+                        else
+                        {
+                            return View("EditLecture", new LectureForEditing() { TopicId = topicId, OrderNumber = (_repository.Lectures.Where(x => x.TopicId == topicId).Count() + 1) });
+                        }
                     }
                     catch (Exception e)
                     {
@@ -54,6 +59,7 @@ namespace ELearningSystem.Controllers
             else return View("UnauthorizedAccess");
         }
 
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult SaveLecture(UserInformation user, LectureForEditing lecture)
         {
@@ -70,13 +76,12 @@ namespace ELearningSystem.Controllers
                         if (!ModelState.IsValid) return View("EditLecture", lecture);
                         else
                         {
-                            int newOrdNumber = _repository.Lectures.Where(x => x.TopicId == lecture.TopicId).Count() + 1;
                             Lecture lect = new Lecture()
                             {
                                 ID = lecture.ID,
                                 Name = lecture.Name,
                                 TopicId = lecture.TopicId,
-                                OrderNumber = newOrdNumber,
+                                OrderNumber = lecture.OrderNumber,
                                 Homework = lecture.Homework,
                                 LectureContent = lecture.LectureContent
                             };
@@ -108,8 +113,23 @@ namespace ELearningSystem.Controllers
                 {
                     try
                     {
-                        //Check if user can edit this lecture
-                        return View();
+                        if (!CheckIfLecturerHasAccess(user, lectureId))
+                            return View("AccessDenied");
+                        else
+                        {
+                            //Check if user can edit this lecture
+                            Lecture l = _repository.Lectures.Where(x => x.ID == lectureId).First();
+                            LectureForEditing lect = new LectureForEditing()
+                            {
+                                ID = lectureId,
+                                Homework = l.Homework,
+                                LectureContent = l.LectureContent,
+                                OrderNumber = l.OrderNumber,
+                                TopicId = l.TopicId,
+                                Name = l.Name
+                            };
+                            return View(lect);
+                        }
                     }
                     catch (Exception e)
                     {
@@ -119,6 +139,16 @@ namespace ELearningSystem.Controllers
                 }
             }
             else return View("UnauthorizedAccess");
+        }
+
+        private bool CheckIfLecturerHasAccess(UserInformation user, Guid lectureId)
+        {
+            return user.UserId == _repository.Courses.Where(x => x.ID == _repository.CourseTopics.Where(y => y.ID == _repository.Lectures.Where(z => z.ID == lectureId).FirstOrDefault().TopicId).FirstOrDefault().CourseId).First().LecturerId;
+        }
+
+        private bool CheckIfLecturerHasAccessToTheTopic(UserInformation user, Guid topicId)
+        {
+            return user.UserId == _repository.Courses.Where(x => x.ID == _repository.CourseTopics.Where(y => y.ID == topicId).FirstOrDefault().CourseId).First().LecturerId;
         }
 
     }

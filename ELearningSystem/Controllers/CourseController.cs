@@ -58,53 +58,121 @@ namespace ELearningSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCourse(Course course)
+        public ActionResult CreateCourse(UserInformation user, Course course)
         {
-            if (ModelState.IsValid)
+            if (user != null)
             {
-                _repository.SaveCourse(course);
-                return View("CreationSucceed");
+                if (user.IsStudent)
+                {
+                    return View("Students limitations");
+                }
+                else
+                {
+                    try
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            _repository.SaveCourse(course);
+                            return View("CreationSucceed");
+                        }
+                        else
+                        {
+                            SelectList categories = new SelectList(_repository.CourseCategories, "ID", "Name");
+                            SelectList courseTypes = new SelectList(_repository.CourseTypes, "ID", "TypeName");
+                            ViewBag.Categories = categories;
+                            ViewBag.CourseTypes = courseTypes;
+                            return View("CreateCourse", course);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return View("Error");
+                    }
+
+                }
             }
-            else
-            {
-                SelectList categories = new SelectList(_repository.CourseCategories, "ID", "Name");
-                SelectList courseTypes = new SelectList(_repository.CourseTypes, "ID", "TypeName");
-                ViewBag.Categories = categories;
-                ViewBag.CourseTypes = courseTypes;
-                return View("CreateCourse", course);
-            }
+            else return View("UnauthorizedAccess");
+
         }
 
         [HttpGet]
-        public ActionResult EditCourse(Guid ID)
+        public ActionResult EditCourse(UserInformation user, Guid ID)
         {
-            CourseDetails details = new CourseDetails();
-            var course = _repository.Courses.Where(x => x.ID == ID).ToList();
-            if (course.Count() != 0)
+            if (user != null)
             {
-                details.CourseId = course.First().ID;
-                details.CourseName = course.First().Name;
-                details.Topics = (from x in _repository.CourseTopics where x.CourseId == details.CourseId select new Topic { TopicName = x.Name, ID = x.ID, CourseId = x.CourseId, OrderNumber = x.OrderNumber }).OrderBy(x => x.OrderNumber).ToList<Topic>();
-                for (int i = 0; i < details.Topics.Count; i++)
+                if (user.IsStudent)
                 {
-                    Guid topicId = details.Topics[i].ID;
-                    details.Topics[i].LecturesCount = _repository.Lectures.Where(x => x.TopicId == topicId).Count();
-                    details.Topics[i].TestsCount = _repository.Tests.Where(x => x.TopicId == topicId).Count();
+                    return View("Students limitations");
                 }
-                //details.Topics = _repository.CourseTopics.Where(x => x.CourseId == details.CourseId);
-            }
+                else
+                {
+                    try
+                    {
+                        if (!CheckIfLecturerCanAccessTheCourse(user, ID))
+                            return View("AccessDenied");
+                        else
+                        {
+                            CourseDetails details = new CourseDetails();
+                            var course = _repository.Courses.Where(x => x.ID == ID).ToList();
+                            if (course.Count() != 0)
+                            {
+                                details.CourseId = course.First().ID;
+                                details.CourseName = course.First().Name;
+                                details.Topics = (from x in _repository.CourseTopics where x.CourseId == details.CourseId select new Topic { TopicName = x.Name, ID = x.ID, CourseId = x.CourseId, OrderNumber = x.OrderNumber }).OrderBy(x => x.OrderNumber).ToList<Topic>();
+                                for (int i = 0; i < details.Topics.Count; i++)
+                                {
+                                    Guid topicId = details.Topics[i].ID;
+                                    details.Topics[i].LecturesCount = _repository.Lectures.Where(x => x.TopicId == topicId).Count();
+                                    details.Topics[i].TestsCount = _repository.Tests.Where(x => x.TopicId == topicId).Count();
+                                }
+                                //details.Topics = _repository.CourseTopics.Where(x => x.CourseId == details.CourseId);
+                            }
 
-            return View(details);
+                            return View(details);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return View("Error");
+                    }
+
+                }
+            }
+            else return View("UnauthorizedAccess");
         }
 
         [HttpPost]
-        public ActionResult EditCourse(CourseDetails details)
+        public ActionResult EditCourse(UserInformation user, CourseDetails details)
         {
-            foreach (var item in details.Topics)
+            if (user != null)
             {
-                _repository.SaveTopic(new CourseTopic() { ID = item.ID, CourseId = item.CourseId, Name = item.TopicName, OrderNumber = item.OrderNumber });
+                if (user.IsStudent)
+                {
+                    return View("Students limitations");
+                }
+                else
+                {
+                    try
+                    {
+                        foreach (var item in details.Topics)
+                        {
+                            _repository.SaveTopic(new CourseTopic() { ID = item.ID, CourseId = item.CourseId, Name = item.TopicName, OrderNumber = item.OrderNumber });
+                        }
+                        return RedirectToAction("EditCourse", new { ID = details.CourseId });
+                    }
+                    catch (Exception e)
+                    {
+                        return View("Error");
+                    }
+
+                }
             }
-            return RedirectToAction("EditCourse", new { ID = details.CourseId });
+            else return View("UnauthorizedAccess");
+        }
+
+        private bool CheckIfLecturerCanAccessTheCourse(UserInformation user, Guid courseId)
+        {
+            return user.UserId == _repository.Courses.Where(x => x.ID == courseId).First().LecturerId;
         }
 
         //isn't used

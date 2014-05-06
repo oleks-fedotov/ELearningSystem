@@ -1,13 +1,13 @@
 ﻿@model ELearningSystem.Models.AccountModel
-@{
-    if (TempData["access"] != null && !(bool)TempData["access"])
-    {
-        <script>
-            window.location.reload();
-        </script>
-        @TempData.Remove("access");
-    }
+
+@if (TempData["access"] != null && !(bool)TempData["access"])
+{
+    <script>
+        window.location.reload();
+    </script>
+    @TempData.Remove("access");
 }
+
 
 <div>
     <h4>Welcome, @Model.UserName!</h4>

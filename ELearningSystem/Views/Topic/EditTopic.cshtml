@@ -38,21 +38,28 @@
                         }
                     </div>
                 </div>
+                <div class="form-group">
+                    <input type="button" class="btn btn-success form-control col-sm-offset-1" value="Save changes" id="SaveChangesBut" style="display: none" onclick="$('#topicsEditingForm').submit()" />
+                </div>
             </div>
-
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Lecture</th>
-                        <th>Homework</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    @Html.Partial("LectureSummary", Model)
-                </tbody>
-            </table>
-
+            @using (Html.BeginForm("EditTopic", "Topic", FormMethod.Post, new { id = "topicsEditingForm" }))
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Lecture</th>
+                            <th>Homework</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        @Html.HiddenFor(x => x.ID)
+                        @Html.HiddenFor(x => x.CourseId)
+                        @Html.HiddenFor(x => x.OrderNumber)
+                        @Html.Partial("LectureSummary", Model)
+                    </tbody>
+                </table>
+            }
         </div>
     </legend>
 </div>

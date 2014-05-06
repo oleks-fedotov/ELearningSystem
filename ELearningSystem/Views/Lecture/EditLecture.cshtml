@@ -1,7 +1,7 @@
 ﻿@model ELearningSystem.Models.LectureForEditing
 
 @section scripts{
-<script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
 }
 <script type="text/javascript">
     tinymce.init({
@@ -22,6 +22,7 @@
         @Html.ValidationSummary()
         @Html.HiddenFor(x => x.ID)
         @Html.HiddenFor(x => x.TopicId)
+        @Html.HiddenFor(x => x.OrderNumber)
         <div class="form-group">
             @Html.Label("Lecture name")
             @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
