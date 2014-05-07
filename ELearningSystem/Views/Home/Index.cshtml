@@ -16,7 +16,52 @@
         })
     })
 </script>
-<div id="sm_slider">
+<div class="col-sm-12 col-sm-offset-1">
+    <div class="jumbotron">
+        <h1>Some advantages of online courses</h1>
+        <p>
+            <ul>
+                <li>Class work can be scheduled around work and family.</li>
+                <li>Reduces travel time and travel costs for off-campus students.</li>
+                <li>Students may have the option to select learning materials that meets their level of knowledge and interest.</li>
+                <li>Students can study anywhere they have access to a computer and Internet connection.</li>
+                <li>Self-paced learning modules allow students to work at their own pace.</li>
+                <li>And so on...</li>
+            </ul>
+        </p>
+        <p>@Html.ActionLink("Get started today", "Registration", "Account", null, new { @class = "btn btn-success" })</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>
+                <span class="glyphicon glyphicon-book"></span>Courses
+            </h3>
+            <p>You can read, listen, watch materials of a lecture. After completing each topic you can check you knowledge passing the test.</p>
+            <p>
+                @Html.ActionLink("Learn more »", "AllCourses", "Course", null, new { @class = "btn btn-success" })
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <h3>
+                <span class="glyphicon glyphicon-user"></span>Lecturers
+            </h3>
+            <p>Our lecturer can be everybody who is enthusiasm enough to make a course.</p>
+            <p>
+                @Html.ActionLink("Learn more »", "AllLectures", "Lecturer", null, new { @class = "btn btn-success" })
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <h3>
+                <span class="glyphicon glyphicon-question-sign"></span>About
+            </h3>
+            <p>Our website allow you easily create courses if you are lecturer, if you are student, you can easily find interesting for you courses and attend them.</p>
+            <p>
+                @Html.ActionLink("Learn more »", "About", "Home", null, new { @class = "btn btn-success" })
+            </p>
+        </div>
+    </div>
+</div>
+@*<div id="sm_slider">
     <ul>
         <li>
             <img style="width: 600px; height: auto" src="~/Content/slider_content/images/e-learning1.jpg" /></li>
@@ -27,4 +72,4 @@
         <a class="previous" href="#"></a>
         <a class="next" href="#"></a>
     </div>
-</div>
+</div>*@

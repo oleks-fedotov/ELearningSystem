@@ -15,27 +15,31 @@
 </head>
 <body>
 
-    <div id="Main" class="span19">
+    <div id="Main" class="container">
         <div class="page-header">
-            <h2>
+            <h1>
                 @Html.ActionLink("Online courses", "Index", "Home", null, new { style = "text-decoration: none; color:black; margin-left:40px" })
-            </h2>
+            </h1>
 
         </div>
-        <div id="content" class="container row">
-            <div class="col-md-2 col-md-offset-1 pull-left">
-                <div class="row">
-                    @Html.Partial("Menu")
-                </div>
+        <div id="" class="container row">
+            <div class="col-sm-2">
                 <div class="row">
                     @Html.Action("Login", "Account")
                 </div>
             </div>
-            <div class="col-sm-8 col-sm-offset-3 center-block">
+            <div class="col-sm-10 center-block">
                 @RenderBody()
             </div>
         </div>
-        <div class="footer">КНУ 2014</div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-12">
+                <footer>
+                    КНУ 2014
+                </footer>
+            </div>
+        </div>
     </div>
 
 
