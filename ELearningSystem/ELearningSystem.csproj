@@ -396,6 +396,8 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Views\Shared\AccessDenied.cshtml" />
+    <Content Include="Views\Course\AllCourses.cshtml" />
+    <Content Include="Views\Course\CourseDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

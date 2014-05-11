@@ -46,4 +46,28 @@ namespace ELearningSystem.Models
 
         public List<Test> Tests { get; set; }
     }
+
+    public class CourseSummaryModel
+    {
+        public Guid CourseId { get; set; }
+
+        public string CourseName { get; set; }
+
+        public string LecturerName { get; set; }
+
+        public Guid LecturerId { get; set; }
+
+        public int TopicsQuantity { get; set; }
+
+        public string Description { get; set; }
+    }
+
+    public class CourseDetailsModel
+    {
+        public Guid CourseId { get; set; }
+
+        public string CourseName { get; set; }
+
+        public Dictionary<string, List<string>> Details { get; set; }
+    }
 }

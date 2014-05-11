@@ -1,6 +1,25 @@
-﻿@model Domain.Course
+﻿@model ELearningSystem.Models.CourseSummaryModel
 
-<div class="item">
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <div class="pull-left h4">
+            @Html.DisplayFor(x => x.CourseName)
+        </div>
+        <div class="pull-right h4">
+            @Html.DisplayFor(x => x.LecturerName)
+        </div>
+    </div>
+    <div class="panel-body">
+        <p>@(Model.Description.Length == 150 ? Model.Description + "..." : Model.Description)</p>
+    </div>
+    <div class="panel-footer clearfix">
+        @Html.ActionLink("Learn more »", "SubscribedCourseDetails", "Course", new { courseId = Model.CourseId }, new { @class = "btn btn-primary" })
+    </div>
+</div>
+
+
+
+@*<div class="item">
     <h3>@Model.Name</h3>
     <h5>Lecturer: </h5>@Model.Lecturer
     @using (Html.BeginForm("Subscribe", "Course", FormMethod.Post))
@@ -11,4 +30,4 @@
     }
     <p>@Model.Description</p>    
     <p>Required skills: </p>@Model.RequiredSkills
-</div>
+</div>*@

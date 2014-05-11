@@ -30,8 +30,17 @@ namespace ELearningSystem.Controllers
             {
                 //Get courses for this studentId
                 //Give them to the view(StudentCourses)
-                object courses = null;
-                return View("StudentCourses", courses);
+                IQueryable<CourseSummaryModel> mycourses = from x in _repository.Courses
+                                                           where (from k in _repository.StudentCourses where k.StudentId == user.UserId select k.CourseId).Contains(x.ID)
+                                                           select new CourseSummaryModel()
+                                                           {
+                                                               CourseId = x.ID,
+                                                               CourseName = x.Name,
+                                                               LecturerName = (from l in _repository.Lecturers where l.ID == x.LecturerId select l.Name + " " + l.Surname).FirstOrDefault(),
+                                                               Description = x.Description,
+                                                           };
+
+                return View("StudentCourses", mycourses);
             }
             else
             {
@@ -199,6 +208,106 @@ namespace ELearningSystem.Controllers
                 }
             }
             else return View("UnauthorizedAccess");
+        }
+
+        [HttpGet]
+        public ActionResult AllCourses(int page = 0)
+        {
+
+            List<CourseSummaryModel> courses = (from x in _repository.Courses
+                                                select new CourseSummaryModel
+                                                {
+                                                    LecturerId = x.LecturerId,
+                                                    CourseId = x.ID,
+                                                    CourseName = x.Name,
+                                                    Description = x.Description.Substring(0, 150)
+                                                }).ToList<CourseSummaryModel>();
+            for (int i = 0; i < courses.Count; i++)
+            {
+                Guid lectId = courses[i].LecturerId;
+                Guid courseId = courses[i].CourseId;
+                courses[i].LecturerName = _repository.Lecturers.Where(x => x.ID == lectId).Select(x => x.Name).First();
+                courses[i].TopicsQuantity = _repository.CourseTopics.Where(x => x.CourseId == courseId).Count();
+            }
+            return View(courses);
+        }
+
+        [HttpGet]
+        public ActionResult CourseDetails(UserInformation user, Guid courseId)
+        {
+            CourseDetailsModel model = new CourseDetailsModel()
+            {
+                CourseId = courseId,
+                CourseName = _repository.Courses.Where(x => x.ID == courseId).First().Name,
+                Details = new Dictionary<string, List<string>>()
+            };
+            foreach (var topic in _repository.CourseTopics.Where(x => x.CourseId == courseId).OrderBy(x => x.OrderNumber).ToList())
+            {
+                KeyValuePair<string, List<string>> item = new KeyValuePair<string, List<string>>(topic.Name, new List<string>());
+                foreach (var lecture in _repository.Lectures.Where(x => x.TopicId == topic.ID).OrderBy(x => x.OrderNumber))
+                {
+                    item.Value.Add(lecture.Name);
+                }
+                model.Details.Add(item.Key, item.Value);
+            }
+            if (user != null)
+            {
+                if (user.IsStudent == true)
+                {
+                    ViewBag.CanSubscribe = _repository.CourseRequests.Where(x => x.CourseId == courseId && x.StudentId == user.UserId).Count() == 0;
+                    ViewBag.HasAlreadySentRequest = !ViewBag.CanSubscribe;
+                }
+                else
+                    ViewBag.CanSubscribe = false;
+            }
+            else
+            {
+                ViewBag.CanSubscribe = false;
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SubscribeCourse(UserInformation user, Guid courseId, string message)
+        {
+            if (user != null)
+            {
+                if (!user.IsStudent)
+                {
+                    return View("Students limitations");
+                }
+                else
+                {
+                    try
+                    {
+                        bool isCoursePublic = _repository.CourseTypes.Where(x => x.ID == _repository.Courses.Where(y => y.ID == courseId).FirstOrDefault().CourseTypeId).Select(k => k.TypeName).First() == "public";
+
+                        _repository.SaveCourseRequest(new CourseRequest()
+                        {
+                            IsDeclined = false,
+                            StudentId = user.UserId.Value,
+                            CourseId = courseId,
+                            Message = message,
+                            Date = DateTime.Now
+                        });
+                        if (isCoursePublic)
+                        {
+                            _repository.SaveStudentCourse(new StudentCourse()
+                            {
+                                CourseId = courseId,
+                                StudentId = user.UserId.Value
+                            });
+
+                        }
+                        return Json(true);
+                    }
+                    catch
+                    {
+                        return View("Error");
+                    }
+                }
+            }
+            return View("UnauthorizedAccess");
         }
 
         private bool CheckIfLecturerCanAccessTheCourse(UserInformation user, Guid courseId)

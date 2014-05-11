@@ -34,9 +34,11 @@ namespace Domain
         public bool IsAcademic { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [MaxLength(1000)]
         public string Interests { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [MaxLength(1000)]
         public string Information { get; set; }
 
         [Required(ErrorMessage = "Please write your email")]

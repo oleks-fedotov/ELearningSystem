@@ -31,6 +31,7 @@ function MoveDown(container, elem) {
 function AddTopic(container) {
     if ($("#SaveChangesBut").css("display") == "none") { $("#SaveChangesBut").css("display", "inline"); }
     var topicName = $("#newTopicName").val();
+    $("#newTopicName").prop("value", "");
     var courseId = $("#CourseId").val();
     if (isNaN(Number(container.children().last().children().first().children().last().val())))
         var topicNumber = 1;

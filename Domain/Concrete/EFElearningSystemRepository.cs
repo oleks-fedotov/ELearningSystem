@@ -109,6 +109,35 @@ namespace Domain.Concrete
             }
         }
 
+        public void SaveCourseRequest(CourseRequest request)
+        {
+            if (request.ID == Guid.Empty)
+            {
+                _context.CourseRequests.Add(request);
+            }
+            else
+            {
+                CourseRequest dbEntry = _context.CourseRequests.Find(request.ID);
+                if (dbEntry != null)
+                {
+                    dbEntry.CourseId = request.CourseId;
+                    dbEntry.IsDeclined = request.IsDeclined;
+                    dbEntry.StudentId = request.StudentId;
+                }
+            }
+            _context.SaveChanges();
+        }
+
+        public void DeleteCourseRequest(Guid id)
+        {
+            CourseRequest requestForRemoving = _context.CourseRequests.Find(id);
+            if (requestForRemoving != null)
+            {
+                _context.CourseRequests.Remove(requestForRemoving);
+                _context.SaveChanges();
+            }
+        }
+
         public IQueryable<CourseTopic> CourseTopics
         {
             get
@@ -270,6 +299,33 @@ namespace Domain.Concrete
             get
             {
                 return _context.StudentCourses;
+            }
+        }
+
+        public void SaveStudentCourse(StudentCourse studentCourse)
+        {
+            if (studentCourse.ID == Guid.Empty)
+            {
+                studentCourse.StartDate = DateTime.Now;
+                studentCourse.Mark = 0;
+                _context.StudentCourses.Add(studentCourse);
+            }
+            else
+            {
+                StudentCourse dbEntry = _context.StudentCourses.Find(studentCourse.ID);
+                dbEntry.EndDate = studentCourse.EndDate;
+                dbEntry.Mark = studentCourse.Mark;
+            }
+            _context.SaveChanges();
+        }
+
+        public void DeleteStudentCourse(Guid id)
+        {
+            StudentCourse dbEntry = _context.StudentCourses.Find(id);
+            if (dbEntry != null)
+            {
+                _context.StudentCourses.Remove(dbEntry);
+                _context.SaveChanges();
             }
         }
 

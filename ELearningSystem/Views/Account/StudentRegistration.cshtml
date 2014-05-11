@@ -10,7 +10,7 @@
 }
 
 
-<div id="registrationForm"  class="form-horizontal form-group">
+<div id="registrationForm" class="form-horizontal form-group">
     <div id="load" style="display: none">Loading...</div>
     @using (Ajax.BeginForm(ajaxOpts))
     {
@@ -61,7 +61,7 @@
         <div class="form-group">
             @Html.Label("Information", new { @class = "col-sm-2 control-label col-sm-offset-3" })
             <div class="col-sm-5">
-                @Html.TextAreaFor(x => x.Information, new { @class = "form-control" })
+                @Html.TextAreaFor(x => x.Information, new { @class = "form-control", rows = "7" })
             </div>
         </div>
         <input type="submit" value="Register" class="btn btn-primary" />

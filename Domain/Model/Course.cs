@@ -24,7 +24,7 @@ namespace Domain
         
         public virtual CourseCategory Category { get; set; }
 
-        [Range(1, 10)]
+        [Range(1,10, ErrorMessage="Complexity level must be a number from 1 to 10")]
         [Required(ErrorMessage = "Please write complexity level (1-10)")]
         public decimal ComplexityLevel { get; set; }
 
@@ -39,6 +39,7 @@ namespace Domain
         public Guid LecturerId { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [MaxLength(3000, ErrorMessage = "Required skills list shouldn't be so long")]
         public string RequiredSkills { get; set; }
 
         [HiddenInput(DisplayValue = false)]
@@ -49,12 +50,12 @@ namespace Domain
         public DateTime? EndDate { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessage = "Please write a decsiption for your course")]
-        [MaxLength(500)]
+        [Required(ErrorMessage = "Please write a description for your course")]
+        [MaxLength(3000, ErrorMessage="Description shouldn't be so long")]
         public string Description { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [MaxLength(2000)]
+        [MaxLength(4000, ErrorMessage = "Course content shouldn't be so long")]
         public string CourseContent { get; set; }
     }
 }

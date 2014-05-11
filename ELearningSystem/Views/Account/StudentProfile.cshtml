@@ -5,7 +5,7 @@
     <script>
         window.location.reload();
     </script>
-    @TempData.Remove("access");
+    var k = TempData.Remove("access");
 }
 
 
@@ -13,9 +13,37 @@
     <h4>Welcome, @Model.UserName!</h4>
     Edit profile @Html.ActionLink("Log out", "LogOut", "Account")
     <ul class="nav nav-pills nav-stacked navbar-left">
-        <li>My courses</li>
-        <li>My requests</li>
-        <li>My homeworks</li>
-        <li>My marks</li>
+        <li>
+            <a href=@Url.Action("Index", "Course")>
+                <span>
+                    <span class="glyphicon glyphicon-briefcase"></span>
+                    My courses
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href=@Url.Action("Index", "Course")>
+                <span>
+                    <span class="glyphicon glyphicon-upload"></span>
+                    My requests
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href=@Url.Action("Index", "Course")>
+                <span>
+                    <span class="glyphicon glyphicon-file"></span>
+                    My homeworks
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href=@Url.Action("Index", "Course")>
+                <span>
+                    <span class="glyphicon glyphicon-stats"></span>
+                    My marks
+                </span>
+            </a>
+        </li>
     </ul>
 </div>

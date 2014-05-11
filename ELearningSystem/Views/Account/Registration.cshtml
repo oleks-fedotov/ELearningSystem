@@ -11,7 +11,31 @@
 <div class="text-center">
     <h2>Registration</h2>
     <fieldset id="registrationForm">
-        <div class="form-horizontal form-group">
+        <div class="h3">Select who you want to be?</div>
+        <div class="form-horizontal">
+            @using (Ajax.BeginForm(ajaxOpts))
+            {
+                <div class="form-group">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            @Html.RadioButtonFor(x => x.IsStudent, "true", new { @class = "form-control" })
+                            @Html.Label("I'm a student", new { @class = "form-label", style = "padding-top:8px;" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-inline">
+                        @Html.RadioButtonFor(x => x.IsStudent, "false", new { @class = "form-control" })
+                        @Html.Label("I'm a lecturer", new { @class = "form-label", style = "padding-top:8px;" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Next" class="btn btn-primary" style="width: 100px" />
+                </div>
+            }
+        </div>
+
+        @*<div class="form-horizontal form-group">
             @using (Ajax.BeginForm(ajaxOpts))
             {
                 <legend>Select who you want to be?</legend>
@@ -21,7 +45,7 @@
                         <div class="col-sm-3 col-sm-offset-4">
                             @Html.RadioButtonFor(x => x.IsStudent, "true", new { @class = "form-control" })
                         </div>
-                        @Html.Label("I'm a student", new { @class = "form-label", style="padding-top:8px;"})
+                        @Html.Label("I'm a student", new { @class = "form-label", style = "padding-top:8px;" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -29,12 +53,12 @@
                         <div class="col-sm-3 col-sm-offset-4">
                             @Html.RadioButtonFor(x => x.IsStudent, "false", new { @class = "form-control" })
                         </div>
-                        @Html.Label("I'm a lecturer", new { @class = "form-label", style="padding-top:8px;"})
+                        @Html.Label("I'm a lecturer", new { @class = "form-label", style = "padding-top:8px;" })
                     </div>
                 </div>
                 <br />
-                <input type="submit" value="Next" class="btn btn-primary"  style="width:100px"/>
+                <input type="submit" value="Next" class="btn btn-primary" style="width: 100px" />
             }
-        </div>
+        </div>*@
     </fieldset>
 </div>

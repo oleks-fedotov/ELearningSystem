@@ -1,0 +1,64 @@
+﻿@model ELearningSystem.Models.CourseDetailsModel
+
+<script type="text/javascript">
+    function OnBegin() {
+        $('#subscribeBut').prop('value', 'loading..');
+    }
+    function OnFailure() {
+        alert('Error occured, please try to subscribe later');
+    }
+    function OnSuccess() {
+        $('#subscribeBut').prop('value', 'Request send').prop('disabled', 'true');
+    }
+</script>
+
+@{
+    ViewBag.Title = "CourseDetails";
+    AjaxOptions ajaxOpts = new AjaxOptions()
+    {
+        UpdateTargetId = "subscribeBut",
+        HttpMethod = "Post",
+        OnSuccess = "OnSuccess",
+        OnFailure = "OnFailure",
+        OnBegin = "OnBegin"
+    };
+}
+
+<div class="clearfix">
+    <div class="pull-left">
+        @Html.Label("Course - " + Model.CourseName, new {@class = "h3"})
+    </div>
+    <!--Course is public-->
+    <div class="col-sm-offset-8" style="padding-top:15px; padding-left:35px">
+        @if (ViewBag.CanSubscribe)
+        {
+            using (Ajax.BeginForm("SubscribeCourse", "Course", ajaxOpts))
+            {
+                @Html.HiddenFor(x => x.CourseId)
+                <input type="submit" class="btn btn-primary btn-xl" value=" + Subscribe" id="subscribeBut"/>
+            }
+        }
+        else if (ViewBag.HasAlreadySentRequest != null && ViewBag.HasAlreadySentRequest)
+        {
+            <input type="button" class="btn btn-primary btn-xl" value="Request was sent" disabled="disabled" style="margin-left:-35px;"/>
+        }
+    </div>
+</div>
+
+<div class="col-sm-10">
+    <div>
+        <ul class="list-group">
+            @for (int i = 0; i < Model.Details.Count; i++)
+            {
+                <li class="list-group-item">@((i + 1).ToString() + ".") @Model.Details.ElementAt(i).Key
+                    <ul style="list-style: none">
+                        @for (int j = 0; j < Model.Details.ElementAt(i).Value.Count; j++)
+                        {
+                            <li>@((i + 1).ToString() + "." + (j + 1).ToString()) @Model.Details.ElementAt(i).Value[j]</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

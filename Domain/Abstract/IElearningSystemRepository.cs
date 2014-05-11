@@ -24,6 +24,10 @@ namespace Domain.Abstract
 
         IQueryable<CourseRequest> CourseRequests { get; }
 
+        void SaveCourseRequest(CourseRequest request);
+
+        void DeleteCourseRequest(Guid id);
+
         IQueryable<CourseTopic> CourseTopics { get; }
 
         void SaveTopic(CourseTopic topic);
@@ -55,6 +59,10 @@ namespace Domain.Abstract
         IQueryable<QuestionResult> QuestionResults { get; }
 
         IQueryable<StudentCourse> StudentCourses { get; }
+
+        void SaveStudentCourse(StudentCourse studentCourse);
+
+        void DeleteStudentCourse(Guid id);
 
         IQueryable<Test> Tests { get; }
 
