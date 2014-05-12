@@ -22,7 +22,7 @@
                 <p>@(Model[i].Description.Length == 150 ? Model[i].Description + "..." : Model[i].Description)</p>
             </div>
             <div class="panel-footer clearfix">
-                @Html.ActionLink("Learn more »", "CourseDetails", "Course", new { courseId = Model[i].CourseId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Learn more »", "SubscribedCourseDetails", "Course", new { courseId = Model[i].CourseId }, new { @class = "btn btn-primary" })
             </div>
         </div>
     }

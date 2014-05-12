@@ -310,6 +310,59 @@ namespace ELearningSystem.Controllers
             return View("UnauthorizedAccess");
         }
 
+        [HttpGet]
+        public ActionResult SubscribedCourseDetails(UserInformation user, Guid courseId)
+        {
+            if (user == null) 
+                return View("UnauthorizedAccess");
+            else
+            {
+                if (!user.IsStudent)
+                    return View("LecturerLimitations");
+                else
+                {
+                    try
+                    {
+                        //todo: change it
+                        CourseDetailsModel model = new CourseDetailsModel()
+                        {
+                            CourseId = courseId,
+                            CourseName = _repository.Courses.Where(x => x.ID == courseId).First().Name,
+                            Details = new Dictionary<string, List<string>>()
+                        };
+                        foreach (var topic in _repository.CourseTopics.Where(x => x.CourseId == courseId).OrderBy(x => x.OrderNumber).ToList())
+                        {
+                            KeyValuePair<string, List<string>> item = new KeyValuePair<string, List<string>>(topic.Name, new List<string>());
+                            foreach (var lecture in _repository.Lectures.Where(x => x.TopicId == topic.ID).OrderBy(x => x.OrderNumber))
+                            {
+                                item.Value.Add(lecture.Name);
+                            }
+                            model.Details.Add(item.Key, item.Value);
+                        }
+                        if (user != null)
+                        {
+                            if (user.IsStudent == true)
+                            {
+                                ViewBag.CanSubscribe = _repository.CourseRequests.Where(x => x.CourseId == courseId && x.StudentId == user.UserId).Count() == 0;
+                                ViewBag.HasAlreadySentRequest = !ViewBag.CanSubscribe;
+                            }
+                            else
+                                ViewBag.CanSubscribe = false;
+                        }
+                        else
+                        {
+                            ViewBag.CanSubscribe = false;
+                        }
+                        return View(model);
+                    }
+                    catch
+                    {
+                        return View("Error");
+                    }
+                }
+            }
+        }
+
         private bool CheckIfLecturerCanAccessTheCourse(UserInformation user, Guid courseId)
         {
             return user.UserId == _repository.Courses.Where(x => x.ID == courseId).First().LecturerId;

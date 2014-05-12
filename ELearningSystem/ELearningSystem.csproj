@@ -398,6 +398,7 @@
     <Content Include="Views\Shared\AccessDenied.cshtml" />
     <Content Include="Views\Course\AllCourses.cshtml" />
     <Content Include="Views\Course\CourseDetails.cshtml" />
+    <Content Include="Views\Shared\LecturerLimitations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
