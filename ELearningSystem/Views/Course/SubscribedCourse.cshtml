@@ -15,13 +15,22 @@
 
 
 <script type="text/javascript">
+    var lecturesQuantity;
     function showModal() {
         $('#lectureModal').modal('show');
     };
-    function saveLectureIdAndName(id, name) {
-        $("#showedLectureName").val(name);
+
+    function saveLectureIdAndName(id, index) {
+        $("#showedLectureIndex").val(index);
         $("#showedLectureId").val(id);
     }
+    function getCurrentLectureId() {
+        return $("#showedLectureId").val();
+    }
+    function getCurrentLectureIndex() {
+        return $("#showedLectureIndex").val();
+    }
+
     function setLectureId(command) {
         $("#prevLectureId").val($("#showedLectureId").val());
         $("#nextLectureId").val($("#showedLectureId").val());
@@ -54,18 +63,76 @@
             $("#showedLectureId").val(data);
         });
     }
+
+    function showLectureContent(id, name, index) {
+        $.ajax({
+            url: "@Url.Action("ShowLectureContent", "Lecture")",
+            type: "POST",
+            data: { lectureId: id }
+        })
+        .done(function (data) {
+            $("#showPrevLectureBut").css("display","block");
+            $("#showNextLectureBut").css("display", "block");
+            if(index == 0)
+            {
+                $("#showPrevLectureBut").css("display","none");
+            }
+            if(index == lecturesQuantity)
+            {
+                $("#showNextLectureBut").css("display","none");
+            }
+            saveLectureIdAndName(id, index);
+            $("#lectureTitle").text(name);
+            $("#lectureContentContainer").html("");
+            $("#lectureContentContainer").append(data);
+            showModal();
+        });
+    }
+
+    function showNextLecture() {
+        var nextIndex = Number(getCurrentLectureIndex()) + 1;
+        saveLectureAsRead(getCurrentLectureId(), getCurrentLectureIndex());
+        var nextLectureName = getNextLectureName(nextIndex);
+        var nextLectureId = getNextLectureId(nextIndex);
+        showLectureContent(nextLectureId, nextLectureName, nextIndex);
+    }
+
+    function saveLectureAsRead(id,index) {
+        $.ajax({
+            url: "@Url.Action("SaveLectureRead", "Lecture")",
+            type: "POST",
+            data: { lectureId: id }
+        })
+        .done(function () {
+            $("#isLectureRead" + index).addClass("glyphicon glyphicon-check");
+        });
+    }
+
+    function getNextLectureName(index) {
+        return $("#lectureName" + index).val();
+    }
+
+    function getNextLectureId(index) {
+        return $("#lectureId" + index).val();
+    }
+
+    function setLecturesQuantity(quantity) {
+        lecturesQuantity = quantity;
+    }
 </script>
 
 
 <h2>@Model.CourseName</h2>
 
 <div class="col-sm-10">
-    <input type="hidden" id="showedLectureName" />
+    <input type="hidden" id="showedLectureIndex" />
     <input type="hidden" id="showedLectureId" />
     <div>
         <ul class="list-group">
+            @{ int counter = 0; }
             @for (int i = 0; i < Model.Details.Count; i++)
             {
+                
                 <li class="list-group-item"><strong>@((i + 1).ToString() + ".") @Model.Details.ElementAt(i).Key</strong>
                     <ul style="list-style: none">
                         @for (int j = 0; j < Model.Details.ElementAt(i).Value.Count; j++)
@@ -76,13 +143,24 @@
                                 <div class="">
                                     <div class="list-group">
                                         <div class="pull-left">
+                                            @if (Model.Details.ElementAt(i).Value[j].IsLectureWatched)
+                                            {
+                                                <span id='@("isLectureRead"+@counter)' class="glyphicon glyphicon-check"></span>
+                                            }
+                                            else
+                                            {
+                                                <span id='@("isLectureRead"+@counter)'></span>
+                                            }
                                             @((i + 1).ToString() + "." + (j + 1).ToString() + " " + lectureName)
+
                                         </div>
                                         <div class="pull-right">
                                             @using (Ajax.BeginForm("ShowLectureContent", "Lecture", ajaxOpts))
                                             {
-                                                @Html.Hidden("lectureId", lectureId)
-                                                <button type="submit" class="btn btn-xs btn" onclick="saveLectureIdAndName('@lectureId', '@lectureName');">
+                                                @Html.Hidden("lectureId", lectureId, new { id = ("lectureId" + counter.ToString()) })
+                                                @Html.Hidden("lectureName", lectureName, new { id = ("lectureName" + counter) })
+                                                @Html.Hidden("counter", counter, new { id = ("index" + counter) })
+                                                <button type="submit" class="btn btn-xs btn" onclick="showLectureContent('@lectureId', '@lectureName', '@counter'); return false;">
                                                     <span class="glyphicon glyphicon-eye-open"></span>
                                                     &nbspWatch
                                                 </button>
@@ -92,10 +170,14 @@
                                 </div>
 
                             </li>
+                                            counter++;
                         }
                     </ul>
                 </li>
             }
+            <script>
+                setLecturesQuantity(@counter - 1);
+            </script>
         </ul>
     </div>
     <div class="modal fade" id="lectureModal">
@@ -103,7 +185,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>
-                    <h3>Lecture content</h3>
+                    <h3 id="lectureTitle">Lecture content</h3>
                 </div>
                 <div class="modal-body" id="lectureContentContainer">
                 </div>
@@ -112,7 +194,7 @@
                         @using (Ajax.BeginForm("ShowPrevLecture", "Lecture", ajaxOpts))
                         {
                             @Html.Hidden("lectureId", "", new { id = "prevLectureId" })
-                            <button type="submit" class="btn btn-xl" onclick="setLectureId('prev')">
+                            <button type="submit" class="btn btn-xl" onclick="setLectureId('prev')" id="showPrevLectureBut">
                                 <span class="glyphicon glyphicon-backward"></span>
                                 &nbspPrevious
                             </button>
@@ -122,7 +204,7 @@
                         @using (Ajax.BeginForm("ShowNextLecture", "Lecture", ajaxOpts))
                         {
                             @Html.Hidden("lectureId", "", new { id = "nextLectureId" })
-                            <button type="submit" class="btn btn-xl" onclick="setLectureId('next')">
+                            <button type="submit" class="btn btn-xl" onclick="showNextLecture(); return false;" id="showNextLectureBut">
                                 Next&nbsp
                                 <span class="glyphicon glyphicon-forward"></span>
                             </button>

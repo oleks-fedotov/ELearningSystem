@@ -201,7 +201,7 @@ namespace ELearningSystem.Controllers
                         if (lectureId == Guid.Empty)
                             return MvcHtmlString.Create("<h3>There is no more lectures to show</h3>");
                         else
-                            return GetLectureContent(user, lectureId);  
+                            return GetLectureContent(user, lectureId);
                     }
                     else
                     {
@@ -216,31 +216,20 @@ namespace ELearningSystem.Controllers
         }
 
         [HttpPost]
-        public MvcHtmlString ShowNextLecture(UserInformation user, Guid lectureId)
+        public void SaveLectureRead(UserInformation user, Guid lectureId)
         {
             if (user != null)
             {
-                _repository.SaveWatchedLecture(new WatchedLecture() { StudentId = user.UserId.Value, CourseId = GetCourseIdByLectureId(lectureId), LectureId = lectureId });
+                if (_repository.WatchedLectures.Where(x => x.StudentId == user.UserId && x.LectureId == lectureId).Count() == 0)
+                {
+                    _repository.SaveWatchedLecture(new WatchedLecture()
+                    {
+                        CourseId = GetCourseIdByLectureId(lectureId),
+                        LectureId = lectureId,
+                        StudentId = user.UserId.Value
+                    });
+                }
             }
-            return ShowLectureContent(user, GetNextLectureId(lectureId));
-        }
-
-        [HttpPost]
-        public MvcHtmlString ShowPrevLecture(UserInformation user, Guid lectureId)
-        {
-            return ShowLectureContent(user, GetPrevLectureId(lectureId));
-        }
-
-        [HttpPost]
-        public Guid AjaxGetNextLectureId(Guid lectureId)
-        {
-            return GetNextLectureId(lectureId);
-        }
-
-        [HttpPost]
-        public Guid AjaxGetPrevLectureId(Guid lectureId)
-        {
-            return GetPrevLectureId(lectureId);
         }
 
         public MvcHtmlString GetLectureContent(UserInformation user, Guid lectureId)
