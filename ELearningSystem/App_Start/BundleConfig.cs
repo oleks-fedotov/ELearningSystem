@@ -64,7 +64,7 @@ namespace ELearningSystem
                 "~/Content/body.css",
                 "~/Content/bootstrap-responsive.css",
                 "~/Content/bootstrap-mvc-validation.css",
-                "~/Content/boostrap-theme.min.css"
+                "~/Content/boostrap-theme.css"
                 ));
         }
     }
