@@ -1,0 +1,74 @@
+﻿@model ELearningSystem.Models.SubscribedCourseDetailsModel
+
+@{
+    ViewBag.Title = Model.CourseName;
+    AjaxOptions ajaxOpts = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "lectureContentContainer",
+        OnSuccess = "showModal",
+    };
+}
+
+@*<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" type="text/javascript"></script>*@
+
+
+<script type="text/javascript">
+    function showModal() {
+        $("#lectureModal").modal('show');
+    };
+</script>
+
+<h2>@Model.CourseName</h2>
+
+<div class="col-sm-10">
+    <div>
+        <ul class="list-group">
+            @for (int i = 0; i < Model.Details.Count; i++)
+            {
+                <li class="list-group-item"><strong>@((i + 1).ToString() + ".") @Model.Details.ElementAt(i).Key</strong>
+                    <ul style="list-style: none">
+                        @for (int j = 0; j < Model.Details.ElementAt(i).Value.Count; j++)
+                        {
+                            <li class="row clearfix list-group-item">
+                                <div class="">
+                                    <div class="list-group">
+                                        <div class="pull-left">
+                                            @((i + 1).ToString() + "." + (j + 1).ToString()) @Model.Details.ElementAt(i).Value[j].LectureName
+                                        </div>
+                                        <div class="pull-right">
+                                            @using (Ajax.BeginForm("ShowLectureContent", "Lecture", ajaxOpts))
+                                            {
+                                                @Html.Hidden("lectureId", Model.Details.ElementAt(i).Value[j].LectureId)
+                                                <button type="submit" class="btn btn-xs btn">
+                                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                                    &nbspWatch
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="modal hide fade" id="lectureModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Lecture content</h3>
+                </div>
+                <div class="modal-body" id="lectureContentContainer">
+                </div>
+                <div class="modal-footer clearfix">
+                    next,prev
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

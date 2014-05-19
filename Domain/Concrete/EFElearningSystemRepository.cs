@@ -345,5 +345,31 @@ namespace Domain.Concrete
             }
         }
 
+        public IQueryable<WatchedLecture> WatchedLectures
+        {
+            get
+            {
+                return _context.WatchedLectures;
+            }
+        }
+
+        public void SaveWatchedLecture(WatchedLecture watchedLecture)
+        {
+            if (watchedLecture.ID == Guid.Empty)
+            {
+                _context.WatchedLectures.Add(watchedLecture);
+            }
+            _context.SaveChanges();
+        }
+
+        public void DeleteWatchedLecture(Guid id)
+        {
+            WatchedLecture dbEntry = _context.WatchedLectures.Find(id);
+            if (dbEntry != null)
+            {
+                _context.WatchedLectures.Remove(dbEntry);
+                _context.SaveChanges();
+            }
+        }
     }
 }

@@ -67,5 +67,11 @@ namespace Domain.Abstract
         IQueryable<Test> Tests { get; }
 
         IQueryable<TestResult> TestResults { get; }
+
+        IQueryable<WatchedLecture> WatchedLectures { get; }
+
+        void SaveWatchedLecture(WatchedLecture watchedLecture);
+
+        void DeleteWatchedLecture(Guid id);
     }
 }

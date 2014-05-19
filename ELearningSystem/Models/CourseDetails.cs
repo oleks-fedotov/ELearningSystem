@@ -70,4 +70,22 @@ namespace ELearningSystem.Models
 
         public Dictionary<string, List<string>> Details { get; set; }
     }
+
+    public class SubscribedCourseDetailsModel
+    {
+        public Guid CourseId { get; set; }
+
+        public string CourseName { get; set; }
+
+        public Dictionary<string, List<SubscribedCourseLectureModel>> Details { get; set; }
+    }
+
+    public class SubscribedCourseLectureModel
+    {
+        public Guid LectureId { get; set; }
+
+        public string LectureName { get; set; }
+
+        public bool IsLectureWatched { get; set; }
+    }
 }

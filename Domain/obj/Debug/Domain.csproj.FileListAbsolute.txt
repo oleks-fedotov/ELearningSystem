@@ -15,3 +15,4 @@ D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Debug\EntityFramework.xml
 D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Debug\EntityFramework.SqlServer.xml
 D:\coding\ASP.NET MVC\ELearningSystem\Domain\obj\Debug\Domain.dll
 D:\coding\ASP.NET MVC\ELearningSystem\Domain\obj\Debug\Domain.pdb
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache

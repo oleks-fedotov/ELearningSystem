@@ -181,6 +181,96 @@ namespace ELearningSystem.Controllers
             else return View("UnauthorizedAccess");
         }
 
+        [HttpPost]
+        public MvcHtmlString ShowLectureContent(UserInformation user, Guid lectureId)
+        {
+            if (user != null)
+            {
+
+                if (isCoursePublic(lectureId))
+                {
+                    return GetLectureContent(user, lectureId);
+                }
+                else
+                {
+                    if (CheckIfStudentIsSubscribedForCourse(user.UserId.Value, lectureId))
+                    {
+                        return GetLectureContent(user, lectureId);
+                    }
+                    else
+                    {
+                        return MvcHtmlString.Create("<h3>You should be subscribed for this course to see the lecture content.</h3>");
+                    }
+                }
+            }
+            else
+            {
+                return MvcHtmlString.Create("<h3>You should be authorized to see the lecture content.</h3>");
+            }
+        }
+
+        [HttpPost]
+        public MvcHtmlString ShowNextLecture(UserInformation user, Guid lectureId)
+        {
+            if (user != null)
+            {
+                _repository.SaveWatchedLecture(new WatchedLecture() { StudentId = user.UserId.Value, CourseId = GetCourseIdByLectureId(lectureId), LectureId = lectureId });
+            }
+            return ShowLectureContent(user, GetNextLectureId(lectureId));
+        }
+
+        [HttpPost]
+        public MvcHtmlString ShowPrevLecture(UserInformation user, Guid lectureId)
+        {
+            return ShowLectureContent(user, GetPrevLectureId(lectureId));
+        }
+
+        public MvcHtmlString GetLectureContent(UserInformation user, Guid lectureId)
+        {
+            var lect = _repository.Lectures.Where(x => x.ID == lectureId).Select(c => c.LectureContent);
+            if (lect.Count() > 0)
+            {
+                return MvcHtmlString.Create(lect.First());
+            }
+            else
+            {
+                return MvcHtmlString.Create("<h3>There is no more lectures to show.</h3>");
+            }
+        }
+
+        private Guid GetNextLectureId(Guid lectureId)
+        {
+            Lecture l = _repository.Lectures.Where(x => x.ID == lectureId).First();
+            var nextLectures = _repository.Lectures.Where(x => x.OrderNumber > l.OrderNumber).OrderBy(k => k.OrderNumber);
+            return nextLectures.Count() > 0 ? nextLectures.First().ID : Guid.Empty;
+        }
+
+        private Guid GetPrevLectureId(Guid lectureId)
+        {
+            Lecture l = _repository.Lectures.Where(x => x.ID == lectureId).First();
+            var nextLectures = _repository.Lectures.Where(x => x.OrderNumber < l.OrderNumber).OrderBy(k => k.OrderNumber);
+            return nextLectures.Count() > 0 ? nextLectures.Last().ID : Guid.Empty;
+        }
+
+        private Guid GetCourseIdByLectureId(Guid lectureId)
+        {
+            return _repository.CourseTopics.Where(x => x.ID == _repository.Lectures.Where(t => t.ID == lectureId).Select(m => m.TopicId).FirstOrDefault()).Select(s => s.CourseId).First();
+        }
+
+        private bool isCoursePublic(Guid lectureId)
+        {
+            return _repository.CourseTypes.Where(z => z.ID == (_repository.Courses.Where(x => x.ID ==
+                _repository.CourseTopics.Where(t => t.ID == _repository.Lectures.Where(l => l.ID == lectureId).
+                    FirstOrDefault().TopicId).FirstOrDefault().CourseId).FirstOrDefault().CourseTypeId)).First().TypeName.ToLower() == "public";
+        }
+
+        private bool CheckIfStudentIsSubscribedForCourse(Guid studentId, Guid lectureId)
+        {
+            return _repository.StudentCourses.Where(x => x.StudentId == studentId &&
+                x.CourseId == _repository.CourseTopics.Where(m => m.ID == _repository.Lectures.Where(l => l.ID == lectureId).FirstOrDefault().TopicId).FirstOrDefault().CourseId)
+                .Count() > 0;
+        }
+
         private bool CheckIfLecturerHasAccess(UserInformation user, Guid lectureId)
         {
             return user.UserId == _repository.Courses.Where(x => x.ID == _repository.CourseTopics.Where(y => y.ID == _repository.Lectures.Where(z => z.ID == lectureId).FirstOrDefault().TopicId).FirstOrDefault().CourseId).First().LecturerId;

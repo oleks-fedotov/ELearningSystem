@@ -143,6 +143,7 @@
     <Compile Include="Model\StudentCourse.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestResult.cs" />
+    <Compile Include="Model\WatchedLecture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

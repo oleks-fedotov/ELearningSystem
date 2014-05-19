@@ -55,3 +55,5 @@ function DeleteCourseConfirmation(courseName) {
     if (flag) return true;
     else return false;
 };
+
+

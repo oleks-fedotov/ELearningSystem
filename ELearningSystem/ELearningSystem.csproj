@@ -155,6 +155,7 @@
     <Compile Include="Infrastructure\EmailSender.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\DisplayLectureModel.cs" />
     <Compile Include="Models\IsStudentModel.cs" />
     <Compile Include="Models\LectureForEditing.cs" />
     <Compile Include="Models\RegistrationFinishedModel.cs" />
@@ -172,6 +173,7 @@
     <Content Include="Content\bootstrap-mvc-validation.css" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\glyphicons-halflings-regular.svg" />
@@ -399,6 +401,7 @@
     <Content Include="Views\Course\AllCourses.cshtml" />
     <Content Include="Views\Course\CourseDetails.cshtml" />
     <Content Include="Views\Shared\LecturerLimitations.cshtml" />
+    <Content Include="Views\Course\SubscribedCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

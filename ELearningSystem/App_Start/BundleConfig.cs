@@ -23,7 +23,9 @@ namespace ELearningSystem
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/myscripts").Include(
-                        "~/Scripts/MyScripts.js"));
+                        "~/Scripts/MyScripts.js",
+                        "~/Scripts/bootstrap.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/tinymce").Include(
                         "~/Scripts/tinymce/tinymce.min.js"));
@@ -61,7 +63,8 @@ namespace ELearningSystem
                 "~/Content/bootstrap.css",
                 "~/Content/body.css",
                 "~/Content/bootstrap-responsive.css",
-                "~/Content/bootstrap-mvc-validation.css"
+                "~/Content/bootstrap-mvc-validation.css",
+                "~/Content/boostrap-theme.min.css"
                 ));
         }
     }

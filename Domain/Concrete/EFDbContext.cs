@@ -44,5 +44,7 @@ namespace Domain.Concrete
         public DbSet<Test> Tests { get; set; }
 
         public DbSet<TestResult> TestResults { get; set; }
+
+        public DbSet<WatchedLecture> WatchedLectures { get; set; }
     }
 }
