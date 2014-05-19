@@ -56,4 +56,46 @@ function DeleteCourseConfirmation(courseName) {
     else return false;
 };
 
+//--------
+
+//function setLectureId(command) {
+//    $("#prevLectureId").val($("#showedLectureId").val());
+//    $("#nextLectureId").val($("#showedLectureId").val());
+//    if (command == "prev") {
+//        GetAndSetPrevLectureId();
+//    }
+//    else {
+//        GetAndSetNextLectureId();
+//    }
+//}
+//function GetAndSetPrevLectureId() {
+//    $.ajax({
+//        url: "http://localhost:1381/Lecture/ShowNextLecture",
+//        type: "POST",
+//        data: { lectureId: $("#showedLectureId").val().toString() }
+//    })
+//    .done(function (data) {
+//        $("#showedLectureId").val(data)
+//    })
+//    .fail(function () {
+//        alert('error')
+//    }
+//    );
+//}
+//function GetAndSetNextLectureId() {
+//    var k = $.ajax({
+//        url: "http://localhost:1381/Lecture/ShowNextLecture",
+//        type: "POST",
+//        data: { lectureId: $("#showedLectureId").val().toString() }
+//    })
+//    .done(function (data) {
+//        alert(data);
+//        $("#showedLectureId").val(data)
+//    })
+//    .fail(function () {
+//        alert('error')
+//    }
+//    );
+//}
+
 

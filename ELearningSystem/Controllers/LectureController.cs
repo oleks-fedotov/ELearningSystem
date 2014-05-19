@@ -189,13 +189,19 @@ namespace ELearningSystem.Controllers
 
                 if (isCoursePublic(lectureId))
                 {
-                    return GetLectureContent(user, lectureId);
+                    if (lectureId == Guid.Empty)
+                        return MvcHtmlString.Create("<h3>There is no more lectures to show</h3>");
+                    else
+                        return GetLectureContent(user, lectureId);
                 }
                 else
                 {
                     if (CheckIfStudentIsSubscribedForCourse(user.UserId.Value, lectureId))
                     {
-                        return GetLectureContent(user, lectureId);
+                        if (lectureId == Guid.Empty)
+                            return MvcHtmlString.Create("<h3>There is no more lectures to show</h3>");
+                        else
+                            return GetLectureContent(user, lectureId);  
                     }
                     else
                     {
@@ -223,6 +229,18 @@ namespace ELearningSystem.Controllers
         public MvcHtmlString ShowPrevLecture(UserInformation user, Guid lectureId)
         {
             return ShowLectureContent(user, GetPrevLectureId(lectureId));
+        }
+
+        [HttpPost]
+        public Guid AjaxGetNextLectureId(Guid lectureId)
+        {
+            return GetNextLectureId(lectureId);
+        }
+
+        [HttpPost]
+        public Guid AjaxGetPrevLectureId(Guid lectureId)
+        {
+            return GetPrevLectureId(lectureId);
         }
 
         public MvcHtmlString GetLectureContent(UserInformation user, Guid lectureId)

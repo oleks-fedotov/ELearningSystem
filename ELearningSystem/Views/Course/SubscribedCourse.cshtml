@@ -16,13 +16,52 @@
 
 <script type="text/javascript">
     function showModal() {
-        $("#lectureModal").modal('show');
+        $('#lectureModal').modal('show');
     };
+    function saveLectureIdAndName(id, name) {
+        $("#showedLectureName").val(name);
+        $("#showedLectureId").val(id);
+    }
+    function setLectureId(command) {
+        $("#prevLectureId").val($("#showedLectureId").val());
+        $("#nextLectureId").val($("#showedLectureId").val());
+        if (command == "prev") {
+            GetAndSetPrevLectureId();
+        }
+        else {
+            GetAndSetNextLectureId();
+        }
+    }
+    function GetAndSetPrevLectureId() {
+        $.ajax({
+            url: "@Url.Action("AjaxGetPrevLectureId", "Lecture")",
+            type: "POST",
+            data: { lectureId: $("#showedLectureId").val() }
+        })
+        .done(function (data) {
+            alert(data);
+            $("#showedLectureId").val(data);
+        });
+    }
+    function GetAndSetNextLectureId() {
+        $.ajax({
+            url: "@Url.Action("AjaxGetNextLectureId", "Lecture")",
+            type: "POST",
+            data: { lectureId: $("#showedLectureId").val() }
+        })
+        .done(function (data) {
+            alert(data);
+            $("#showedLectureId").val(data);
+        });
+    }
 </script>
+
 
 <h2>@Model.CourseName</h2>
 
 <div class="col-sm-10">
+    <input type="hidden" id="showedLectureName" />
+    <input type="hidden" id="showedLectureId" />
     <div>
         <ul class="list-group">
             @for (int i = 0; i < Model.Details.Count; i++)
@@ -31,17 +70,19 @@
                     <ul style="list-style: none">
                         @for (int j = 0; j < Model.Details.ElementAt(i).Value.Count; j++)
                         {
+                            string lectureName = Model.Details.ElementAt(i).Value[j].LectureName;
+                            Guid lectureId = Model.Details.ElementAt(i).Value[j].LectureId;
                             <li class="row clearfix list-group-item">
                                 <div class="">
                                     <div class="list-group">
                                         <div class="pull-left">
-                                            @((i + 1).ToString() + "." + (j + 1).ToString()) @Model.Details.ElementAt(i).Value[j].LectureName
+                                            @((i + 1).ToString() + "." + (j + 1).ToString() + " " + lectureName)
                                         </div>
                                         <div class="pull-right">
                                             @using (Ajax.BeginForm("ShowLectureContent", "Lecture", ajaxOpts))
                                             {
-                                                @Html.Hidden("lectureId", Model.Details.ElementAt(i).Value[j].LectureId)
-                                                <button type="submit" class="btn btn-xs btn">
+                                                @Html.Hidden("lectureId", lectureId)
+                                                <button type="submit" class="btn btn-xs btn" onclick="saveLectureIdAndName('@lectureId', '@lectureName');">
                                                     <span class="glyphicon glyphicon-eye-open"></span>
                                                     &nbspWatch
                                                 </button>
@@ -57,16 +98,36 @@
             }
         </ul>
     </div>
-    <div class="modal hide fade" id="lectureModal">
+    <div class="modal fade" id="lectureModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>
                     <h3>Lecture content</h3>
                 </div>
                 <div class="modal-body" id="lectureContentContainer">
                 </div>
                 <div class="modal-footer clearfix">
-                    next,prev
+                    <div class="pull-left">
+                        @using (Ajax.BeginForm("ShowPrevLecture", "Lecture", ajaxOpts))
+                        {
+                            @Html.Hidden("lectureId", "", new { id = "prevLectureId" })
+                            <button type="submit" class="btn btn-xl" onclick="setLectureId('prev')">
+                                <span class="glyphicon glyphicon-backward"></span>
+                                &nbspPrevious
+                            </button>
+                        }
+                    </div>
+                    <div class="pull-right">
+                        @using (Ajax.BeginForm("ShowNextLecture", "Lecture", ajaxOpts))
+                        {
+                            @Html.Hidden("lectureId", "", new { id = "nextLectureId" })
+                            <button type="submit" class="btn btn-xl" onclick="setLectureId('next')">
+                                Next&nbsp
+                                <span class="glyphicon glyphicon-forward"></span>
+                            </button>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
