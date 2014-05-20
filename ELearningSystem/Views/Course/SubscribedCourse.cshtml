@@ -97,6 +97,13 @@
         showLectureContent(nextLectureId, nextLectureName, nextIndex);
     }
 
+    function showPrevLecture() {
+        var prevIndex = Number(getCurrentLectureIndex()) - 1;
+        var prevLectureName = getNextLectureName(prevIndex);
+        var prevLectureId = getNextLectureId(prevIndex);
+        showLectureContent(prevLectureId, prevLectureName, prevIndex);
+    }
+
     function saveLectureAsRead(id,index) {
         $.ajax({
             url: "@Url.Action("SaveLectureRead", "Lecture")",
@@ -194,7 +201,7 @@
                         @using (Ajax.BeginForm("ShowPrevLecture", "Lecture", ajaxOpts))
                         {
                             @Html.Hidden("lectureId", "", new { id = "prevLectureId" })
-                            <button type="submit" class="btn btn-xl" onclick="setLectureId('prev')" id="showPrevLectureBut">
+                            <button type="submit" class="btn btn-xl" onclick="showPrevLecture(); return false;" id="showPrevLectureBut">
                                 <span class="glyphicon glyphicon-backward"></span>
                                 &nbspPrevious
                             </button>
