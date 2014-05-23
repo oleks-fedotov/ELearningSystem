@@ -403,6 +403,8 @@
     <Content Include="Views\Course\CourseDetails.cshtml" />
     <Content Include="Views\Shared\LecturerLimitations.cshtml" />
     <Content Include="Views\Course\SubscribedCourse.cshtml" />
+    <Content Include="Views\Course\AllCoursesList.cshtml" />
+    <Content Include="Views\Course\CourseFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

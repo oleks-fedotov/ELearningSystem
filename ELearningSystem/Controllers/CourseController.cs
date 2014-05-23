@@ -213,23 +213,24 @@ namespace ELearningSystem.Controllers
         [HttpGet]
         public ActionResult AllCourses(int page = 0)
         {
-
-            List<CourseSummaryModel> courses = (from x in _repository.Courses
-                                                select new CourseSummaryModel
-                                                {
-                                                    LecturerId = x.LecturerId,
-                                                    CourseId = x.ID,
-                                                    CourseName = x.Name,
-                                                    Description = x.Description.Substring(0, 150)
-                                                }).ToList<CourseSummaryModel>();
-            for (int i = 0; i < courses.Count; i++)
-            {
-                Guid lectId = courses[i].LecturerId;
-                Guid courseId = courses[i].CourseId;
-                courses[i].LecturerName = _repository.Lecturers.Where(x => x.ID == lectId).Select(x => x.Name).First();
-                courses[i].TopicsQuantity = _repository.CourseTopics.Where(x => x.CourseId == courseId).Count();
-            }
-            return View(courses);
+            #region
+            //List<CourseSummaryModel> courses = (from x in _repository.Courses
+            //                                    select new CourseSummaryModel
+            //                                    {
+            //                                        LecturerId = x.LecturerId,
+            //                                        CourseId = x.ID,
+            //                                        CourseName = x.Name,
+            //                                        Description = x.Description.Substring(0, 150)
+            //                                    }).ToList<CourseSummaryModel>();
+            //for (int i = 0; i < courses.Count; i++)
+            //{
+            //    Guid lectId = courses[i].LecturerId;
+            //    Guid courseId = courses[i].CourseId;
+            //    courses[i].LecturerName = _repository.Lecturers.Where(x => x.ID == lectId).Select(x => x.Name + " " + x.Surname).First();
+            //    courses[i].TopicsQuantity = _repository.CourseTopics.Where(x => x.CourseId == courseId).Count();
+            //}
+            #endregion
+            return View();
         }
 
         [HttpGet]
@@ -349,6 +350,39 @@ namespace ELearningSystem.Controllers
                     }
                 }
             }
+        }
+
+        public PartialViewResult CourseList(List<Guid> categoriesId = null, List<Guid> courseTypesId = null, string courseNamePart = null)
+        {
+            List<CourseSummaryModel> courses;
+            if (categoriesId == null && courseNamePart == null && courseTypesId == null)
+            {
+                courses = (from x in _repository.Courses
+                           select new CourseSummaryModel
+                           {
+                               LecturerId = x.LecturerId,
+                               CourseId = x.ID,
+                               CourseName = x.Name,
+                               Description = x.Description.Substring(0, 150)
+                           }).ToList<CourseSummaryModel>();
+                for (int i = 0; i < courses.Count; i++)
+                {
+                    Guid lectId = courses[i].LecturerId;
+                    Guid courseId = courses[i].CourseId;
+                    courses[i].LecturerName = _repository.Lecturers.Where(x => x.ID == lectId).Select(x => x.Name + " " + x.Surname).First();
+                    courses[i].TopicsQuantity = _repository.CourseTopics.Where(x => x.CourseId == courseId).Count();
+                }
+            }
+            else
+            {
+                courses = new List<CourseSummaryModel>();
+            }
+            return PartialView("AllCoursesList", courses);
+        }
+
+        public PartialViewResult CourseFilter()
+        {
+            return PartialView("CourseFilter");
         }
 
         private bool CheckIfLecturerCanAccessTheCourse(UserInformation user, Guid courseId)
