@@ -145,8 +145,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BootstrapBaseController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CoursesRequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LectureController.cs" />
+    <Compile Include="Controllers\LecturerController.cs" />
     <Compile Include="Controllers\TopicController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -155,9 +157,12 @@
     <Compile Include="Infrastructure\EmailSender.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\CourseRequestModel.cs" />
     <Compile Include="Models\DisplayLectureModel.cs" />
+    <Compile Include="Models\EditProfileModel.cs" />
     <Compile Include="Models\IsStudentModel.cs" />
     <Compile Include="Models\LectureForEditing.cs" />
+    <Compile Include="Models\LecturerModel.cs" />
     <Compile Include="Models\RegistrationFinishedModel.cs" />
     <Compile Include="Models\CourseDetails.cs" />
     <Compile Include="Models\UserInformation.cs" />
@@ -405,6 +410,13 @@
     <Content Include="Views\Course\SubscribedCourse.cshtml" />
     <Content Include="Views\Course\AllCoursesList.cshtml" />
     <Content Include="Views\Course\CourseFilter.cshtml" />
+    <Content Include="Views\CourseRequests\StudentCourseRequests.cshtml" />
+    <Content Include="Views\CourseRequests\LecturerCourseRequests.cshtml" />
+    <Content Include="Views\Account\EditStudentProfile.cshtml" />
+    <Content Include="Views\Account\EditLecturerProfile.cshtml" />
+    <Content Include="Views\Account\ChangesSaved.cshtml" />
+    <Content Include="Views\Lecturer\AllLecturers.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -28,3 +28,11 @@ D:\coding\asp.net MVC\ELearningSystem\ELearningSystem\bin\System.Web.WebPages.De
 D:\coding\asp.net MVC\ELearningSystem\ELearningSystem\bin\System.Web.WebPages.Razor.xml
 D:\coding\asp.net MVC\ELearningSystem\ELearningSystem\obj\Release\ELearningSystem.dll
 D:\coding\asp.net MVC\ELearningSystem\ELearningSystem\obj\Release\ELearningSystem.pdb
+D:\coding\ASP.NET MVC\ELearningSystem\ELearningSystem\bin\Domain.dll
+D:\coding\ASP.NET MVC\ELearningSystem\ELearningSystem\bin\EntityFramework.SqlServer.dll
+D:\coding\ASP.NET MVC\ELearningSystem\ELearningSystem\bin\Microsoft.Web.Mvc.dll
+D:\coding\ASP.NET MVC\ELearningSystem\ELearningSystem\bin\Ninject.dll
+D:\coding\ASP.NET MVC\ELearningSystem\ELearningSystem\bin\Domain.pdb
+D:\coding\ASP.NET MVC\ELearningSystem\ELearningSystem\bin\EntityFramework.SqlServer.xml
+D:\coding\ASP.NET MVC\ELearningSystem\ELearningSystem\bin\Ninject.xml
+D:\coding\ASP.NET MVC\ELearningSystem\ELearningSystem\obj\Release\ELearningSystem.csprojResolveAssemblyReference.cache

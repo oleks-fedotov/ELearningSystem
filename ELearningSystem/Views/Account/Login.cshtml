@@ -17,15 +17,18 @@
         {
             @Html.ValidationSummary()
             <div style="display: block" class="form-group">
-                @Html.Label("Login", new { style = "display: inline-block; width: 60px"})
-                @Html.TextBoxFor(x => x.UserName, new { style = "width:100px; display:inline-block;", @class="form-control col-md-offset-1" })
+                @Html.Label("Login", new { style = "display: inline-block; width: 60px" })
+                @Html.TextBoxFor(x => x.UserName, new { style = "width:100px; display:inline-block;", @class = "form-control col-md-offset-1" })
             </div>
             <div style="display: block" class="form-group">
                 @Html.Label("Password", new { style = "display: inline-block; width: 60px" })
-                @Html.PasswordFor(x => x.Password, new { style = "width:100px; display:inline-block;", @class="form-control col-md-offset-1"  })
+                @Html.PasswordFor(x => x.Password, new { style = "width:100px; display:inline-block;", @class = "form-control col-md-offset-1" })
             </div>
             <div>
-                <input type="submit" value="  Log in  " class="btn btn-primary input-medium" onclick="setTimeout(disableFunction, 1);"/>
+                <button type="submit" class="btn btn-primary input-medium" onclick="setTimeout(disableFunction, 1);">
+                    Log in &nbsp
+                    <span class="glyphicon glyphicon-log-in"></span>
+                </button>
                 @Html.ActionLink("Registration", "Registration", null, new { @class = "col-md-offset-1" })
             </div>
         }

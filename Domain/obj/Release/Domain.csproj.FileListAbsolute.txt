@@ -1,0 +1,10 @@
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Release\Domain.dll.config
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Release\Domain.dll
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Release\Domain.pdb
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Release\EntityFramework.dll
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Release\EntityFramework.SqlServer.dll
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Release\EntityFramework.xml
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\bin\Release\EntityFramework.SqlServer.xml
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\obj\Release\Domain.csprojResolveAssemblyReference.cache
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\obj\Release\Domain.dll
+D:\coding\ASP.NET MVC\ELearningSystem\Domain\obj\Release\Domain.pdb

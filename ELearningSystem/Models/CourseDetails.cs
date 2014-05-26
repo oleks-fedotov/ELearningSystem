@@ -57,9 +57,11 @@ namespace ELearningSystem.Models
 
         public Guid LecturerId { get; set; }
 
-        public int TopicsQuantity { get; set; }
-
         public string Description { get; set; }
+
+        public string CourseType { get; set; }
+
+        public string Category { get; set; }
     }
 
     public class CourseDetailsModel
@@ -69,6 +71,14 @@ namespace ELearningSystem.Models
         public string CourseName { get; set; }
 
         public Dictionary<string, List<string>> Details { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public string RequiredSkills { get; set; }
+
+        public decimal ComplexityLevel { get; set; }
     }
 
     public class SubscribedCourseDetailsModel

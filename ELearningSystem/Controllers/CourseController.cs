@@ -236,11 +236,16 @@ namespace ELearningSystem.Controllers
         [HttpGet]
         public ActionResult CourseDetails(UserInformation user, Guid courseId)
         {
+            Course course = _repository.Courses.Where(x => x.ID == courseId).First();
             CourseDetailsModel model = new CourseDetailsModel()
             {
                 CourseId = courseId,
-                CourseName = _repository.Courses.Where(x => x.ID == courseId).First().Name,
-                Details = new Dictionary<string, List<string>>()
+                CourseName = course.Name,
+                Details = new Dictionary<string, List<string>>(),
+                ComplexityLevel = course.ComplexityLevel,
+                CreationDate = course.CreationDate,
+                Description = course.Description,
+                RequiredSkills = course.RequiredSkills
             };
             foreach (var topic in _repository.CourseTopics.Where(x => x.CourseId == courseId).OrderBy(x => x.OrderNumber).ToList())
             {
@@ -283,22 +288,32 @@ namespace ELearningSystem.Controllers
                     {
                         bool isCoursePublic = _repository.CourseTypes.Where(x => x.ID == _repository.Courses.Where(y => y.ID == courseId).FirstOrDefault().CourseTypeId).Select(k => k.TypeName).First() == "public";
 
-                        _repository.SaveCourseRequest(new CourseRequest()
-                        {
-                            IsDeclined = false,
-                            StudentId = user.UserId.Value,
-                            CourseId = courseId,
-                            Message = message,
-                            Date = DateTime.Now
-                        });
                         if (isCoursePublic)
                         {
+                            _repository.SaveCourseRequest(new CourseRequest()
+                            {
+                                IsDeclined = false,
+                                StudentId = user.UserId.Value,
+                                CourseId = courseId,
+                                Message = message,
+                                Date = DateTime.Now
+                            });
                             _repository.SaveStudentCourse(new StudentCourse()
                             {
                                 CourseId = courseId,
                                 StudentId = user.UserId.Value
                             });
-
+                        }
+                        else
+                        {
+                            _repository.SaveCourseRequest(new CourseRequest()
+                            {
+                                CourseId = courseId,
+                                Date = DateTime.Now,
+                                IsDeclined = true,
+                                Message = message,
+                                StudentId = user.UserId.Value
+                            });
                         }
                         return Json(true);
                     }
@@ -352,10 +367,10 @@ namespace ELearningSystem.Controllers
             }
         }
 
-        public PartialViewResult CourseList(List<Guid> categoriesId = null, List<Guid> courseTypesId = null, string courseNamePart = null)
+        public PartialViewResult CourseList(List<Guid> categoriesId = null)
         {
             List<CourseSummaryModel> courses;
-            if (categoriesId == null && courseNamePart == null && courseTypesId == null)
+            if (categoriesId == null)
             {
                 courses = (from x in _repository.Courses
                            select new CourseSummaryModel
@@ -370,19 +385,76 @@ namespace ELearningSystem.Controllers
                     Guid lectId = courses[i].LecturerId;
                     Guid courseId = courses[i].CourseId;
                     courses[i].LecturerName = _repository.Lecturers.Where(x => x.ID == lectId).Select(x => x.Name + " " + x.Surname).First();
-                    courses[i].TopicsQuantity = _repository.CourseTopics.Where(x => x.CourseId == courseId).Count();
+                    courses[i].Category = _repository.CourseCategories.Where(k => k.ID == _repository.Courses.Where(x => x.ID == courseId).Select(c => c.CategoryId).FirstOrDefault()).Select(m => m.Name).First();
+                    courses[i].CourseType = _repository.CourseTypes.Where(t => t.ID == _repository.Courses.Where(x => x.ID == courseId).Select(c => c.CourseTypeId).FirstOrDefault()).Select(k => k.TypeName).First();
                 }
             }
             else
             {
-                courses = new List<CourseSummaryModel>();
+                courses = (from x in _repository.Courses
+                           where categoriesId.Contains(x.CategoryId)
+                           select new CourseSummaryModel
+                           {
+                               LecturerId = x.LecturerId,
+                               CourseId = x.ID,
+                               CourseName = x.Name,
+                               Description = x.Description.Substring(0, 150)
+                           }).ToList<CourseSummaryModel>();
+                for (int i = 0; i < courses.Count; i++)
+                {
+                    Guid lectId = courses[i].LecturerId;
+                    Guid courseId = courses[i].CourseId;
+                    courses[i].LecturerName = _repository.Lecturers.Where(x => x.ID == lectId).Select(x => x.Name + " " + x.Surname).First();
+                    courses[i].Category = _repository.CourseCategories.Where(k => k.ID == _repository.Courses.Where(x => x.ID == courseId).Select(c => c.CategoryId).FirstOrDefault()).Select(m => m.Name).First();
+                    courses[i].CourseType = _repository.CourseTypes.Where(t => t.ID == _repository.Courses.Where(x => x.ID == courseId).Select(c => c.CourseTypeId).FirstOrDefault()).Select(k => k.TypeName).First();
+                }
+            }
+            return PartialView("AllCoursesList", courses);
+        }
+
+        public PartialViewResult CourseListBySearching(string searchString)
+        {
+            List<CourseSummaryModel> courses = new List<CourseSummaryModel>();
+            string[] strings = searchString.Split(' ');
+
+            foreach (var item in strings)
+            {
+                List<CourseSummaryModel> tempCourses = (from x in _repository.Courses
+                                                        where (x.Name.ToLower().Contains(item.ToLower()) || x.Lecturer.Name.ToLower().Contains(item.ToLower())
+                                                        || x.Lecturer.Surname.ToLower().Contains(item.ToLower())
+                                                        || x.Category.Name.ToLower().Contains(item.ToLower())
+                                                        || x.CourseType.TypeName.ToLower().Contains(item.ToLower()))
+                                                        select new CourseSummaryModel
+                                                        {
+                                                            LecturerId = x.LecturerId,
+                                                            CourseId = x.ID,
+                                                            CourseName = x.Name,
+                                                            Description = x.Description.Substring(0, 150)
+                                                        }).ToList<CourseSummaryModel>();
+                foreach (var course in tempCourses)
+                {
+                    if (courses.Where(k => k.CourseId == course.CourseId).Count() == 0)
+                    {
+                        courses.Add(course);
+                    }
+                }
+                for (int i = 0; i < courses.Count; i++)
+                {
+                    Guid lectId = courses[i].LecturerId;
+                    Guid courseId = courses[i].CourseId;
+                    courses[i].LecturerName = _repository.Lecturers.Where(x => x.ID == lectId).Select(x => x.Name + " " + x.Surname).First();
+                    courses[i].Category = _repository.CourseCategories.Where(k => k.ID == _repository.Courses.Where(x => x.ID == courseId).Select(c => c.CategoryId).FirstOrDefault()).Select(m => m.Name).First();
+                    courses[i].CourseType = _repository.CourseTypes.Where(t => t.ID == _repository.Courses.Where(x => x.ID == courseId).Select(c => c.CourseTypeId).FirstOrDefault()).Select(k => k.TypeName).First();
+                }
             }
             return PartialView("AllCoursesList", courses);
         }
 
         public PartialViewResult CourseFilter()
         {
-            return PartialView("CourseFilter");
+            Dictionary<Guid, string> categories = new Dictionary<Guid, string>();
+            _repository.CourseCategories.ToList().ForEach(x => categories.Add(x.ID, x.Name));
+            return PartialView("CourseFilter", categories);
         }
 
         private bool CheckIfLecturerCanAccessTheCourse(UserInformation user, Guid courseId)

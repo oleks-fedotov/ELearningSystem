@@ -1,0 +1,40 @@
+﻿@model ELearningSystem.Models.StudentEditProfileModel
+
+@{
+    ViewBag.Title = "Edit profile";
+}
+
+<div id="editProfileForm" class="form-horizontal col-sm-10">
+    @using (Html.BeginForm("EditStudentProfile", "Account", FormMethod.Post))
+    {
+        <br />
+        @Html.ValidationSummary()
+        <div class="form-group">
+            @Html.Label("Name", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Surname", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextBoxFor(x => x.Surname, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Interests", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextAreaFor(x => x.Interests, new { @class = "form-control", rows = "7" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Information", new { @class = "col-sm-2 control-label col-sm-offset-3" })
+            <div class="col-sm-5">
+                @Html.TextAreaFor(x => x.Information, new { @class = "form-control", rows = "7" })
+            </div>
+        </div>
+        <div class="col-sm-offset-5">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    }
+</div>

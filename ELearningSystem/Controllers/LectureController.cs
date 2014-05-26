@@ -4,6 +4,7 @@ using ELearningSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -234,10 +235,18 @@ namespace ELearningSystem.Controllers
 
         public MvcHtmlString GetLectureContent(UserInformation user, Guid lectureId)
         {
-            var lect = _repository.Lectures.Where(x => x.ID == lectureId).Select(c => c.LectureContent);
+            var lect = _repository.Lectures.Where(x => x.ID == lectureId);
             if (lect.Count() > 0)
             {
-                return MvcHtmlString.Create(lect.First());
+                StringBuilder sb = new StringBuilder();
+                sb.Append(lect.First().LectureContent);
+                if (lect.First().Homework != null && lect.First().Homework.Length > 0)
+                {
+                    sb.Append("<hr/>");
+                    sb.Append("<h3>Homework</h3>");
+                    sb.Append(lect.First().Homework);
+                }
+                return MvcHtmlString.Create(sb.ToString());
             }
             else
             {

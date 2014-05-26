@@ -15,7 +15,13 @@
             <p>@(Model[i].Description.Length == 150 ? Model[i].Description + "..." : Model[i].Description)</p>
         </div>
         <div class="panel-footer clearfix">
-            @Html.ActionLink("Learn more »", "CourseDetails", "Course", new { courseId = Model[i].CourseId }, new { @class = "btn btn-primary" })
+            <div class="pull-left">
+                @Html.ActionLink("Learn more »", "CourseDetails", "Course", new { courseId = Model[i].CourseId }, new { @class = "btn btn-primary" })
+            </div>
+            <div class="pull-right">
+                @Html.Label(Model[i].Category, new { name = "categoryName", @class = "btn btn-default" })
+                @Html.Label("Type: " + Model[i].CourseType, new { name = "courseType", @class = Model[i].CourseType == "public" ? "btn btn-success" : "btn btn-info" })
+            </div>
         </div>
     </div>
 }

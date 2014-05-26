@@ -1,15 +1,207 @@
-﻿@*@model List<string>*@
+﻿@model Dictionary<Guid, string>
+
+<script type="text/javascript">
+    var idList = [];
+    $(document).ready(function () {
+        $("input:checkbox").change(function (evt) {
+            var selectedId = [];
+            var shouldBeEmpty = idList.length > 0 ? false : true;
+            var isDeleting = false;
+            selectedId = GetSelectedIds();
+            if (selectedId.length == 0) {
+                selectedId = GetAllIds();
+                shouldBeEmpty = true;
+                isDeleting = false;
+                idList = [];
+            }
+            else if (selectedId.length > idList.length) {
+                isDeleting = false;
+                for (var i = 0; i < selectedId.length; i++) {
+                    if ($.inArray(selectedId[i], idList) > -1) {
+                        selectedId.splice(i, 1);
+                        i--;
+                    }
+                }
+                if (idList.length > 0)
+                    idList = idList.concat(selectedId);
+                else
+                    idList = selectedId;
+            }
+            else {
+                var idForDeleting = [];
+                isDeleting = true;
+                for (var i = 0; i < idList.length; i++) {
+                    if ($.inArray(idList[i], selectedId) == -1) {
+                        idForDeleting = idForDeleting.concat(idList[i]);
+                    }
+                }
+                idForDeleting.forEach(function (index) {
+                    var categoryName = GetNameFromElement(index);
+                    GetRowDataForDeleting(categoryName).each(function () { $(this).remove(); });
+                    //var trList = $("tr").has("td:contains('" + colorName + "')").each(function () { $(this).remove(); });
+                });
+                idList = selectedId;
+            }
+            evt.preventDefault();
+
+            if (!isDeleting) {
+                var postData = { categoriesId: selectedId };
+                $.ajax(
+                    {
+                        url: "@Url.Action("CourseList")",
+                        type: "POST",
+                        data: postData,
+                        dataType: "json",
+                        traditional: true,
+                        beforeSend: function () {
+                            $("#loadingBar").animate({ opacity: 1 }, 200, function () { });
+                        }
+                    })
+                .complete(function (data) {
+                    if (shouldBeEmpty) {
+                        $("#container").empty();
+                    }
+                    $("#loadingBar").animate({ opacity: 0 }, 1000, function () { });
+                    $("#container").prepend(data.responseText);
+                });
+                }
+        });
+    });
+
+        function GetRowDataForDeleting(text) {
+            return $("div.panel-footer").has("label:contains('" + text + "')").parent();
+        }
+
+        function GetNameFromElement(id) {
+            var str = "input[value='" + id + "']";
+            return $($("li").has(str).get(0)).text().trim();
+        }
+
+        function GetSelectedIds() {
+            var selectedIds = [];
+            $("#filterContainer").find(":checked").each(function (i, elem) {
+                selectedIds.push($(elem).val());
+            });
+            return selectedIds;
+        }
+
+        function GetAllIds() {
+            var selectedIds = [];
+            $("#filterContainer").find("input").each(function (i, elem) {
+                selectedIds.push($(elem).val());
+            });
+            return selectedIds;
+        }
+</script>
+
+<script>
+    var prevSearchText = "";
+    var prevChangesTime = Date.now();
+    var tid;// = setTimeout(observeTextBoxStart(), 1000);
+    var wasUpdated = true;
+
+    $(document).ready(function () {
+        $("#searchTextBox").on("input",function (evt) {
+            prevChangesTime = Date.now();
+            wasUpdated = false;
+            if ($("#searchTextBox").val() == "") {
+                UpdateCourses();
+            }
+            evt.preventDefault();
+        });
+        $("#searchTextBox").on("focus",observeTextBoxStart);
+        $("#searchTextBox").on("blur",observeTextBoxStop);
+    });
+
+
+    function observeTextBoxStart() {
+        var searchstr = $("#searchTextBox").val();
+        if (searchstr != prevSearchText) {
+            prevSearchText = searchstr;
+        }
+        else if (searchstr != "" && Date.now() - prevChangesTime > 1000 && !wasUpdated) {
+            wasUpdated = true;
+            unCheckAllCategories();
+            UpdateCourses();
+        }
+        tid = setTimeout(observeTextBoxStart, 1000);// repeat myself
+    }
+    function observeTextBoxStop() { // to be called when you want to stop the timer
+        clearTimeout(tid);
+
+    }
+
+    function unCheckAllCategories() {
+        var selectedIds = [];
+        $("#filterContainer").find("input").each(function (i, elem) {
+            $(this).prop("checked", false);
+        });
+    }
+
+    function observeChangeTime() {
+        prevChangesTime = Date.now();
+        wasUpdated = false;
+    }
+
+    function UpdateCourses() {
+        var text = $("#searchTextBox").val();
+        $.ajax(
+                {
+                    url: "@Url.Action("CourseListBySearching")",
+                    type: "POST",
+                    data: { searchString: text },
+                    dataType: "json",
+                    traditional: true,
+                    beforeSend: function () {
+                        $("#searchLoadBar").animate({ opacity: 1 }, 200, function () { });
+                    }
+                })
+                .complete(function (data) {
+                    $("#container").empty();
+                    $("#searchLoadBar").animate({ opacity: 0 }, 1000, function () { });
+                    $("#container").append(data.responseText);
+                });
+    }
+</script>
 
 <div class="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="">1. What is HTML?</a>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="">Search</a>
             </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse in" style="height: auto;">
+        <div id="collapseTwo" class="panel-collapse in" style="height: auto;">
             <div class="panel-body">
-                <p>HTML stands for HyperText Markup Language. HTML is the main markup language for describing the structure of Web pages. <a href="http://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+                <input type="text" class="form-control" id="searchTextBox" placeholder="search by course name, lecturer..." />
+                <label id="searchLoadBar" style="opacity: 0">Searching...</label>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="">Categories</a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" style="height: auto;">
+            <div class="panel-body">
+                <ul style="list-style: none" id="filterContainer">
+                    <div style="opacity: 0;" id="loadingBar">Loading...</div>
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <div class="row" style="font-size: 0.9em">
+                                <div class="col-sm-1">
+                                    <input type="checkbox" value="@item.Key" />
+                                </div>
+                                <div class="col-sm-10">
+                                    @item.Value
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </div>

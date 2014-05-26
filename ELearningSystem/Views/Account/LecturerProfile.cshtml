@@ -10,7 +10,6 @@
 
 <div>
     <h4>Welcome, @Model.UserName!</h4>
-    Edit profile @Html.ActionLink("Log out", "LogOut", "Account")
     <ul class="nav nav-pills nav-stacked navbar-left">
         <li>
             <a href=@Url.Action("Index", "Course")>
@@ -21,7 +20,7 @@
             </a>
         </li>
         <li>
-            <a href=@Url.Action("Index", "Course")>
+            <a href=@Url.Action("Index", "CourseRequests")>
                 <span>
                     <span class="glyphicon glyphicon-plus-sign"></span>
                     Requests for courses
@@ -33,6 +32,22 @@
                 <span>
                     <span class="glyphicon glyphicon-envelope"></span>
                     Homeworks
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("EditProfile", "Account")">
+                <span>
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Edit profile
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("LogOut", "Account")">
+                <span>
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    Log out
                 </span>
             </a>
         </li>

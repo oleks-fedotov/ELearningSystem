@@ -107,6 +107,129 @@ namespace ELearningSystem.Controllers
             });
         }
 
+        public ActionResult EditProfile(UserInformation user)
+        {
+            if (user != null)
+            {
+                if (user.IsStudent)
+                {
+                    try
+                    {
+                        StudentEditProfileModel model = (from x in _repository.Students
+                                                         where x.ID == user.UserId
+                                                         select new StudentEditProfileModel
+                                                         {
+                                                             Id = x.ID,
+                                                             Information = x.Information,
+                                                             Interests = x.Interests,
+                                                             Name = x.Name,
+                                                             Surname = x.Surname
+                                                         }).First();
+                        return View("EditStudentProfile", model);
+
+                    }
+                    catch
+                    {
+                        return View("Error");
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        LecturerEditProfileModel model = (from x in _repository.Lecturers
+                                                          where x.ID == user.UserId
+                                                          select new LecturerEditProfileModel
+                                                          {
+                                                              Id = x.ID,
+                                                              Information = x.Information,
+                                                              Interests = x.Interests,
+                                                              Name = x.Name,
+                                                              Surname = x.Surname,
+                                                              IsAcademic = x.IsAcademic
+                                                          }).First();
+                        return View("EditLecturerProfile", model);
+
+                    }
+                    catch
+                    {
+                        return View("Error");
+                    }
+                }
+            }
+            else
+            {
+                return View("UnauthorizedAccess");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditStudentProfile(UserInformation user, StudentEditProfileModel model)
+        {
+            if (user != null)
+            {
+                if (!user.IsStudent)
+                {
+                    return View("Error");
+                }
+                else
+                {
+                    try
+                    {
+                        Student student = _repository.Students.Where(x => x.ID == user.UserId).First();
+                        student.Information = model.Information;
+                        student.Interests = model.Interests;
+                        student.Name = model.Name;
+                        student.Surname = model.Surname;
+                        _repository.SaveStudent(student);
+                        return View("ChangesSaved");
+                    }
+                    catch
+                    {
+                        return View("Error");
+                    }
+                }
+            }
+            else
+            {
+                return View("UnauthorizedAccess");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditLecturerProfile(UserInformation user, LecturerEditProfileModel model)
+        {
+            if (user != null)
+            {
+                if (user.IsStudent)
+                {
+                    return View("Error");
+                }
+                else
+                {
+                    try
+                    {
+                        Lecturer lecturer = _repository.Lecturers.Where(x => x.ID == user.UserId).First();
+                        lecturer.Information = model.Interests;
+                        lecturer.Interests = model.Interests;
+                        lecturer.Name = model.Name;
+                        lecturer.Surname = model.Surname;
+                        lecturer.IsAcademic = model.IsAcademic;
+                        _repository.SaveLecturer(lecturer);
+                        return View("ChangesSaved");
+                    }
+                    catch
+                    {
+                        return View("Error");
+                    }
+                }
+            }
+            else
+            {
+                return View("UnauthorizedAccess");
+            }
+        }
+
         private bool CheckIfUserIsStudent(string userName)
         {
             if (_repository.Students.Where(x => x.Login == userName).Count() > 0) return true;

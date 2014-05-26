@@ -1,0 +1,99 @@
+﻿@model List<ELearningSystem.Models.LecturerCourseRequestModel>
+
+@{
+    ViewBag.Title = "Requests for courses";
+}
+
+<h2>Requests for courses</h2>
+
+<script>
+    $(document).ready(function () {
+        //approving requests
+        $("input.approveBut").click(function () {
+            var studentId = $(this).data("studentId");
+            var courseId = $(this).data("courseId");
+            var button = $(this);
+            $.ajax(
+                {
+                    url: "@Url.Action("ApproveRequest")",
+                    type: "POST",
+                    data: { courseId: courseId, studentId: studentId },
+                    beforeSend: function () {
+                        $(this).val("Approving...");
+                    }
+                })
+            .done(function (data) {
+                if (data == true) {
+                    button.val("Approved");
+                    button.removeClass("btn-primary");
+                    button.removeClass("btn-warning");
+                    button.addClass("btn-success");
+                    button.addClass("disabled");
+                }
+                else {
+                    button.val("Approved");
+                    button.removeClass("btn-primary");
+                    button.addClass("btn-warning");
+                }
+            })
+            .fail(function (data) {
+                button.val("Error");
+                button.removeClass("btn-primary");
+                button.addClass("btn-warning");
+            })
+        });
+
+        //deleting requests
+        $("input.deleteBut").click(function () {
+            var id = $(this).data("requestId");
+            var button = $(this);
+            $.ajax(
+                {
+                    url: "@Url.Action("DeleteRequest")",
+                    type: "POST",
+                    data: { id: id },
+                    beforeSend: function () {
+                        button.val("Deleting...");
+                    }
+                })
+            .done(function () {
+                button.val("Deleted");
+                button.removeClass("btn-primary");
+                button.addClass("btn-success");
+                button.addClass("disabled");
+            })
+            .fail(function () {
+                button.val("Error");
+                button.removeClass("btn-primary");
+                button.addClass("btn-warning");
+            })
+        });
+    });
+</script>
+
+<div class="col-sm-10">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course name</th>
+                <th>Student name</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(item.CourseName, "EditCourse", "Course", new { ID = item.CourseId }, new { })</td>
+                    <td>@item.StudentName</td>
+                    <td>@item.Date</td>
+                    <td>
+                        <input type="button" class="btn btn-primary approveBut" value="Approve" data-student-id="@item.StudentId" data-course-id="@item.CourseId"/>
+                        <input type="button" class="btn btn-danger deleteBut" value="Delete" data-request-id="@item.Id" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

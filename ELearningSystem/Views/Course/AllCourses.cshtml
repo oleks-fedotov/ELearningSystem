@@ -5,11 +5,11 @@
 
 <h3>Available courses</h3>
 
-<div class="col-sm-9">
+<div class="col-sm-8" id="container">
     @Html.Action("CourseList")
 </div>
-<div class="col-sm-3">
-    @Html.Partial("CourseFilter")
+<div class="col-sm-4">
+    @Html.Action("CourseFilter")
 </div>
 
 
